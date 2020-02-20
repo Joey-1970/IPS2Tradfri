@@ -1,0 +1,12 @@
+{
+  "id": "{1BB0F126-3AFA-0803-88A7-D5C5E2AAC283}",
+  "author": "Joachim Päper",
+  "name": "IPS2Tradfri",
+  "url": "www.ip-symcon.de",
+  "compatibility": {
+        "version": "5.1"
+  },
+  "version": "1.0",
+  "build": 0,
+  "date": 0
+}
