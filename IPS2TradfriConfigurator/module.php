@@ -100,9 +100,25 @@
 	{
 		$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "getDeviceList" )));
-		$this->SendDebug("GetData", $Result, 0);
-
-	return $Result;
+		//$this->SendDebug("GetData", $Result, 0);
+		$DeviceArray = unserialize($Result);
+		If (is_array($DeviceArray)) {
+			$this->SetStatus(102);
+			$this->SendDebug("GetData", $Result, 0);
+			$Devices = array();
+			$i = 0;
+			foreach($DeviceArray as $Key => $Device) {
+				$Devices[$i]["Name"] = $Device["Name"];
+				$Devices[$i]["Typ"] = $Device["Typ"];
+				$Devices[$i]["Firmware"] = $Device["Firmware"];
+				$Devices[$i]["Class"] = $Device["Class"];
+				$Devices[$i]["DeviceID"] = $Key;
+				
+				$Devices[$i]["Instance"] = 0;//$this->GetGeCoSInstanceID($Key);
+				$i = $i + 1;
+			}
+		}
+	return serialize($Devices);;
 	}
 	
 	function GetStationInstanceID(string $StationID)
