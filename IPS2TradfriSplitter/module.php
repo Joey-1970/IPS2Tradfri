@@ -11,7 +11,7 @@
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyString("GatewayIP", "Gateway IP");
 		$this->RegisterPropertyString("SecurityID", "Security ID");
-		
+		$this->RegisterPropertyString("PresharedKey", "Preshared Key");
 		
         }
  	
@@ -28,7 +28,7 @@
 		$arrayElements[] = array("type" => "Label", "label" => "Tradfri-Gateway-Zugriffsdaten");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "GatewayIP", "caption" => "Gateway IP");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "SecurityID", "caption" => "Security ID");
-		
+		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "PresharedKey", "caption" => "Preshared Key");
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
@@ -55,8 +55,12 @@
 	    	$data = json_decode($JSONString);
 	    	$Result = false;
 	 	switch ($data->Function) {
-			case "getData":
-				
+			case "getAccessData":
+				$AccessArray = Array();
+				$AccessArray["GatewayIP"] = $this->ReadPropertyString("GatewayIP");
+				$AccessArray["SecurityID"] = $this->ReadPropertyString("SecurityID");
+				$AccessArray["PresharedKey"] = $this->ReadPropertyString("PresharedKey");
+				$Result = $AccessArray;
 				break;
 			case "getConfiguratorData":
 				
