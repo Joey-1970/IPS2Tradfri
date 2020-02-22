@@ -64,7 +64,7 @@
 					       "instanceID" => $DeviceArray[$i]["Instance"]);
 			}
 			
-			
+		}	
 		$arrayElements[] = array("type" => "Configurator", "name" => "DeviceList", "caption" => "Tradri-Geräte", "rowCount" => 10, "delete" => false, "sort" => $arraySort, "columns" => $arrayColumns, "values" => $arrayValues);
 
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
