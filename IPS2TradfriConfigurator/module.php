@@ -25,7 +25,7 @@
 		$arrayElements[] = array("type" => "SelectCategory", "name" => "Category", "caption" => "Zielkategorie");
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arraySort = array();
-		$arraySort = array("column" => "Brand", "direction" => "ascending");
+		$arraySort = array("column" => "DeviceID", "direction" => "ascending");
 		
 		$arrayColumns = array();
 		$arrayColumns[] = array("caption" => "Geräte ID", "name" => "DeviceID", "width" => "100px", "visible" => true);
@@ -51,8 +51,19 @@
 		}
 		$arrayValues = array();
 		for ($i = 0; $i < Count($DeviceArray); $i++) {
-			$arrayCreate = array();
 			/*
+			$arrayCreate = array();
+			If (($FamilyCode == "10") OR ($FamilyCode == "28") OR ($FamilyCode == "3a")) {
+				$arrayCreate[] = array("moduleID" => $this->FamilyCodeToGUID($FamilyCode), 
+					       "configuration" => array("DeviceAddress" => $OWArray[$i]["OWSerial"], "Open" => true) );
+				$arrayValues[] = array("OWType" => $OWArray[$i]["OWType"], "OWSerial" => $OWArray[$i]["OWSerial"],
+					       "instanceID" => $OWArray[$i]["Instance"], "create" => $arrayCreate);
+			}
+			else {
+				$arrayValues[] = array("OWType" => $OWArray[$i]["OWType"], "OWSerial" => $OWArray[$i]["OWSerial"],
+					       "instanceID" => $OWArray[$i]["Instance"]);
+			}
+			
 			$arrayCreate[] = array("moduleID" => "{47286CAD-187A-6D88-89F0-BDA50CBF712F}", "location" => $RootNames, 
 					       "configuration" => array("StationID" => $StationArray[$i]["StationsID"], "Timer_1" => 10));
 			$arrayValues[] = array("Brand" => $StationArray[$i]["Brand"], "Name" => $StationArray[$i]["Name"], "Street" => $StationArray[$i]["Street"],
