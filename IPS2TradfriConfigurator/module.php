@@ -90,7 +90,7 @@
 				"Function" => "getDeviceList" )));
 		$this->SendDebug("GetData", $Result, 0);
 
-	return;
+	return $Result;
 	}
 	
 	function GetStationInstanceID(string $StationID)
