@@ -9,7 +9,7 @@
             	// Diese Zeile nicht löschen.
             	parent::Create();
 		$this->RegisterPropertyBoolean("Open", false);
-		$this->RegisterPropertyString("DeviceID", "Device ID");
+		$this->RegisterPropertyInteger("DeviceID", "Device ID");
 		
 		// Status-Variablen anlegen
 		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
@@ -56,7 +56,8 @@
 	{
   		switch($Ident) {
 	        case "State":
-	            //$this->Set_Status($Value);
+	            $Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+				"Function" => "SwitchBulb", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
 	            break;
 	        case "Intensity":
 	            //$this->Set_Intensity($Value);
