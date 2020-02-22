@@ -1,0 +1,14 @@
+{
+  "id": "{3B0E081A-A63E-7496-E304-A34C00790516}",
+  "name": "IPS2TradfriBulb",
+  "type": 3,
+  "vendor": "JP-IPS-Modules",
+  "aliases":
+  [
+    "IPS2TradfriBulb"
+  ],
+  "parentRequirements": ["{4AA318CB-CA9A-2467-3079-A35AD1577771}"],
+  "childRequirements": [],
+  "implemented": ["{D63AA852-D72B-258B-6AF5-689C8B62AF02}"],
+  "prefix": "IPS2TradfriBulb"
+}
