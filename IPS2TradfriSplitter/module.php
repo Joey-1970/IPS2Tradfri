@@ -61,7 +61,7 @@
 				$Result = serialize($DeviceListArray);
 				break;
 			case "SwitchBulb":
-				$this->SwitchBulb();
+				$this->SwitchBulb($data->DeviceID, $data->State);
 				break;
 			
 		}
