@@ -1,0 +1,14 @@
+{
+  "id": "{8188DDC2-A5B6-F95F-CB5B-EE7E253CF34A}",
+  "name": "IPS2TradriConfigurator",
+  "type": 4,
+  "vendor": "JP-IPS-Modules",
+  "aliases":
+  [
+    "IPS2TradriConfigurator"
+  ],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "IPS2TradriConfigurator"
+}
