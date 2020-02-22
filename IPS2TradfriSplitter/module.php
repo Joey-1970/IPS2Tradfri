@@ -55,7 +55,7 @@
 	    	$data = json_decode($JSONString);
 	    	$Result = false;
 	 	switch ($data->Function) {
-			case "getAccessData":
+			case "getDeviceList":
 				$DeviceListArray = array();
 				$DeviceListArray = $this->DeviceList();
 				$Result = serialize($DeviceListArray);
