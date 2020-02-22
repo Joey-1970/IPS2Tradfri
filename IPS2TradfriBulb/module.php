@@ -57,12 +57,15 @@
 	{
   		switch($Ident) {
 	        case "State":
-	            $Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "SwitchBulb", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
-	            SetValueBoolean($this->GetIDForIdent($Ident), $Value);
+	            	SetValueBoolean($this->GetIDForIdent($Ident), $Value);
 		break;
 	        case "Intensity":
-	            //$this->Set_Intensity($Value);
+	            	$Value = min(254, max(0, $Value));
+			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+				"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value )));
+	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 	            break;
 	        default:
 	            throw new Exception("Invalid Ident");
