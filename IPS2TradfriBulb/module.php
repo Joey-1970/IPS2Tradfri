@@ -59,7 +59,8 @@
 	        case "State":
 	            $Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "SwitchBulb", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
-	            break;
+	            SetValueBoolean($this->GetIDForIdent($Ident), $Value);
+		break;
 	        case "Intensity":
 	            //$this->Set_Intensity($Value);
 	            break;
