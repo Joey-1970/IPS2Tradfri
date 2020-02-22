@@ -8,6 +8,7 @@
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
+		$this->ConnectParent("{562389F8-739F-644A-4FC7-36F2CE3AFE4F}");
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("DeviceID", 0);
 		
