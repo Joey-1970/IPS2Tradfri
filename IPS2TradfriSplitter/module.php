@@ -60,8 +60,8 @@
 				$DeviceListArray = $this->DeviceList();
 				$Result = serialize($DeviceListArray);
 				break;
-			case "getConfiguratorData":
-				
+			case "SwitchBulb":
+				$this->SwitchBulb();
 				break;
 			
 		}
@@ -69,7 +69,16 @@
 	}
 	    
 	// Beginn der Funktionen
-	
+	private function SwitchBulb($DeviceID, $State)
+	{
+		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadPropertyString("PresharedKey");
+		$Identifier = "ip-symcon";
+		$State = intval($State);
+		$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5850": '.$State.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
+		$Response = exec($Message." 2>&1", $Output);
+	}
+	    
 	private function DeviceList()
 	{
 		$IP = $this->ReadPropertyString("GatewayIP");
