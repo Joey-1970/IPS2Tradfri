@@ -51,27 +51,20 @@
 		}
 		$arrayValues = array();
 		for ($i = 0; $i < Count($DeviceArray); $i++) {
-			/*
+			
 			$arrayCreate = array();
-			If (($FamilyCode == "10") OR ($FamilyCode == "28") OR ($FamilyCode == "3a")) {
-				$arrayCreate[] = array("moduleID" => $this->FamilyCodeToGUID($FamilyCode), 
-					       "configuration" => array("DeviceAddress" => $OWArray[$i]["OWSerial"], "Open" => true) );
-				$arrayValues[] = array("OWType" => $OWArray[$i]["OWType"], "OWSerial" => $OWArray[$i]["OWSerial"],
-					       "instanceID" => $OWArray[$i]["Instance"], "create" => $arrayCreate);
+			If (($DeviceArray[$i]["DeviceID"] >= 65537) AND ($DeviceArray[$i]["Class"] <> "Unknown")) {
+				$arrayCreate[] = array("moduleID" => 0, 
+					       "configuration" => array("DeviceID" => $DeviceArray[$i][$DeviceID], "Open" => true) );
+				$arrayValues[] = array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Name" => $DeviceArray[$i]["Name"], "Firmware" => $DeviceArray[$i]["Firmware"], "Class" => $DeviceArray[$i]["Class"],
+					       "instanceID" => $DeviceArray[$i]["Instance"], "create" => $arrayCreate);
 			}
 			else {
-				$arrayValues[] = array("OWType" => $OWArray[$i]["OWType"], "OWSerial" => $OWArray[$i]["OWSerial"],
-					       "instanceID" => $OWArray[$i]["Instance"]);
+				$arrayValues[] = array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Name" => $DeviceArray[$i]["Name"], "Firmware" => $DeviceArray[$i]["Firmware"], "Class" => $DeviceArray[$i]["Class"],
+					       "instanceID" => $DeviceArray[$i]["Instance"]);
 			}
 			
-			$arrayCreate[] = array("moduleID" => "{47286CAD-187A-6D88-89F0-BDA50CBF712F}", "location" => $RootNames, 
-					       "configuration" => array("StationID" => $StationArray[$i]["StationsID"], "Timer_1" => 10));
-			$arrayValues[] = array("Brand" => $StationArray[$i]["Brand"], "Name" => $StationArray[$i]["Name"], "Street" => $StationArray[$i]["Street"],
-					       "Place" => $StationArray[$i]["Place"], "name" => $StationArray[$i]["Name"], "instanceID" => $StationArray[$i]["InstanceID"], 
-					       "create" => $arrayCreate);
-			*/
-		}
-		
+			
 		$arrayElements[] = array("type" => "Configurator", "name" => "DeviceList", "caption" => "Tradri-Geräte", "rowCount" => 10, "delete" => false, "sort" => $arraySort, "columns" => $arrayColumns, "values" => $arrayValues);
 
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
