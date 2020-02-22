@@ -66,6 +66,12 @@
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
+			If ($Value == 0) {
+				SetValueBoolean($this->GetIDForIdent("State"), false);
+			}
+			else {
+				SetValueBoolean($this->GetIDForIdent("State"), true);
+			}
 	            break;
 	        default:
 	            throw new Exception("Invalid Ident");
