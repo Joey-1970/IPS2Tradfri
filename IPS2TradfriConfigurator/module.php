@@ -84,50 +84,10 @@
 	// Beginn der Funktionen
 	private function GetData()
 	{
-		$locationObject = json_decode($this->ReadPropertyString('Location'), true);
-		$Lat = $locationObject['latitude'];
-		$Long = $locationObject['longitude']; 
-		$Radius = $this->ReadPropertyFloat("Radius");
-		$Radius = min(25, max(0, $Radius));
-		$StationArray = array();
-		If (($Lat <> 0) AND ($Long <> 0) AND ($Radius > 0)) {
-			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{6ADD0473-D761-A2BF-63BE-CFE279089F5A}", 
-				"Function" => "GetAreaInformation", "InstanceID" => $this->InstanceID, "Lat" => $Lat, "Long" => $Long, "Radius" => $Radius )));
-			If ($Result <> false) {
-				$this->SetStatus(102);
-				$this->SendDebug("GetData", $Result, 0);
-				//$this->ShowResult($Result);
-				$ResultArray = array();
-				$ResultArray = json_decode($Result);
-				// Fehlerbehandlung
-				If (boolval($ResultArray->ok) == false) {
-					$this->SendDebug("ShowResult", "Fehler bei der Datenermittlung: ".utf8_encode($ResultArray->message), 0);
-					return;
-				}
-				
-				$i = 0;
-				foreach($ResultArray->stations as $Stations) {
-					$StationArray[$i]["Brand"] = ucwords(strtolower($Stations->brand));
-					$StationArray[$i]["Name"] = ucwords(strtolower($Stations->name));
-					$StationArray[$i]["Street"] = ucwords(strtolower($Stations->street));
-					$StationArray[$i]["Place"] = ucwords(strtolower($Stations->place));
-					$StationArray[$i]["StationsID"] = $Stations->id;
-					$StationArray[$i]["InstanceID"] = $this->GetStationInstanceID($Stations->id);
+		$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+				"Function" => "getAccessData" )));
 
-					$i = $i + 1;
-				}
-				$this->SendDebug("GetData", "TankstellenArray: ".serialize($StationArray), 0);
-				
-			}
-			else {
-				$this->SetStatus(202);
-				$this->SendDebug("GetData", "Fehler bei der Datenermittlung!", 0);
-			}
-		}
-		else {
-			$this->SendDebug("GetDataUpdate", "Keine Koordinaten verfügbar!", 0);
-		}
-	return serialize($StationArray);
+	return;
 	}
 	
 	function GetStationInstanceID(string $StationID)
