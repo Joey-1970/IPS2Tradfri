@@ -8,10 +8,8 @@
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
-		$this->ConnectParent("{66FD608F-6C67-6011-25E3-B9ED4C3E1590}");
-		$this->RegisterPropertyString("Location", '{"latitude":0,"longitude":0}');  
-		$this->RegisterPropertyFloat("Radius", 5.0);
-		$this->RegisterPropertyInteger("Category", 0);  
+		$this->ConnectParent("{562389F8-739F-644A-4FC7-36F2CE3AFE4F}");
+		
         }
  	
 	public function GetConfigurationForm() 
@@ -23,9 +21,6 @@
 		$arrayStatus[] = array("code" => 202, "icon" => "error", "caption" => "Kommunikationfehler!");
 				
 		$arrayElements = array(); 
-		$arrayElements[] = array("type" => "SelectLocation", "name" => "Location", "caption" => "Region");
-		$arrayElements[] = array("type" => "Label", "label" => "Radius (gemäß Tankerkönig.de Maximum 25 km)");
-		$arrayElements[] = array("type" => "NumberSpinner", "name" => "Radius", "caption" => "Radius (km)", "digits" => 1);
 		$arrayElements[] = array("type" => "SelectCategory", "name" => "Category", "caption" => "Zielkategorie");
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arraySort = array();
