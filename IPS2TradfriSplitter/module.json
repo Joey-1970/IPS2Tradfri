@@ -8,7 +8,7 @@
     "IPSTradfriSplitter"
   ],
   "parentRequirements": [],
-  "childRequirements": [],
-  "implemented": [],
+  "childRequirements": ["{D63AA852-D72B-258B-6AF5-689C8B62AF02}"],
+  "implemented": ["{4AA318CB-CA9A-2467-3079-A35AD1577771}"],
   "prefix": "IPS2TradfriSplitter"
 }
