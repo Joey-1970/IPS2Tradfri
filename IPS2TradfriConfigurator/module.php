@@ -30,8 +30,8 @@
 		$arrayColumns = array();
 		$arrayColumns[] = array("caption" => "Geräte ID", "name" => "DeviceID", "width" => "100px", "visible" => true);
 		$arrayColumns[] = array("caption" => "Name", "name" => "Name", "width" => "250px", "visible" => true);
-		$arrayColumns[] = array("caption" => "Typ", "name" => "Typ", "width" => "200px", "visible" => true);
-		$arrayColumns[] = array("caption" => "Firmware", "name" => "Firmware", "width" => "200px", "visible" => true);
+		$arrayColumns[] = array("caption" => "Typ", "name" => "Typ", "width" => "300px", "visible" => true);
+		$arrayColumns[] = array("caption" => "Firmware", "name" => "Firmware", "width" => "150px", "visible" => true);
 		$arrayColumns[] = array("caption" => "Klasse", "name" => "Class", "width" => "auto", "visible" => true);
 		
 		$Category = $this->ReadPropertyInteger("Category");
