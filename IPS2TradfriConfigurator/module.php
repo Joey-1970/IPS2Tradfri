@@ -45,22 +45,23 @@
 		
 		$StationArray = array();
 		If ($this->HasActiveParent() == true) {
-			$StationArray = unserialize($this->GetData());
+			$DeviceArray = unserialize($this->GetData());
 		}
 		$arrayValues = array();
-		for ($i = 0; $i < Count($StationArray); $i++) {
+		for ($i = 0; $i < Count($DeviceArray); $i++) {
 			$arrayCreate = array();
+			/*
 			$arrayCreate[] = array("moduleID" => "{47286CAD-187A-6D88-89F0-BDA50CBF712F}", "location" => $RootNames, 
 					       "configuration" => array("StationID" => $StationArray[$i]["StationsID"], "Timer_1" => 10));
 			$arrayValues[] = array("Brand" => $StationArray[$i]["Brand"], "Name" => $StationArray[$i]["Name"], "Street" => $StationArray[$i]["Street"],
 					       "Place" => $StationArray[$i]["Place"], "name" => $StationArray[$i]["Name"], "instanceID" => $StationArray[$i]["InstanceID"], 
 					       "create" => $arrayCreate);
+			*/
 		}
 		
-		$arrayElements[] = array("type" => "Configurator", "name" => "PetrolStations", "caption" => "Tankstellen", "rowCount" => 10, "delete" => false, "sort" => $arraySort, "columns" => $arrayColumns, "values" => $arrayValues);
+		$arrayElements[] = array("type" => "Configurator", "name" => "DeviceList", "caption" => "Tradri-Geräte", "rowCount" => 10, "delete" => false, "sort" => $arraySort, "columns" => $arrayColumns, "values" => $arrayValues);
 
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
-		$arrayElements[] = array("type" => "Button", "caption" => "Tankerkönig-API", "onClick" => "echo 'https://creativecommons.tankerkoenig.de/';");
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
@@ -85,7 +86,8 @@
 	private function GetData()
 	{
 		$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "getAccessData" )));
+				"Function" => "getDeviceList" )));
+		$this->SendDebug("GetData", $Result, 0);
 
 	return;
 	}
