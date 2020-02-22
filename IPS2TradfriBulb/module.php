@@ -11,6 +11,13 @@
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyString("DeviceID", "Device ID");
 		
+		// Status-Variablen anlegen
+		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
+	        $this->EnableAction("State");
+		
+	        $this->RegisterVariableInteger("Intensity", "Intensity", "~Intensity.255", 20);
+	        $this->EnableAction("Intensity");
+		
 		
         }
  	
@@ -45,7 +52,19 @@
 		}	
 	}
 	
-	
+	public function RequestAction($Ident, $Value) 
+	{
+  		switch($Ident) {
+	        case "State":
+	            //$this->Set_Status($Value);
+	            break;
+	        case "Intensity":
+	            //$this->Set_Intensity($Value);
+	            break;
+	        default:
+	            throw new Exception("Invalid Ident");
+	    }
+	}
 	    
 	// Beginn der Funktionen
 	
