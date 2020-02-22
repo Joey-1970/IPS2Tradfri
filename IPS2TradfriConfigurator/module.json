@@ -7,8 +7,8 @@
   [
     "IPS2TradriConfigurator"
   ],
-  "parentRequirements": [],
+  "parentRequirements": ["{4AA318CB-CA9A-2467-3079-A35AD1577771}"],
   "childRequirements": [],
-  "implemented": [],
+  "implemented": ["{D63AA852-D72B-258B-6AF5-689C8B62AF02}"],
   "prefix": "IPS2TradriConfigurator"
 }
