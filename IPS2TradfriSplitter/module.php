@@ -50,17 +50,15 @@
 	}
 	
 	public function ForwardData($JSONString) 
-	 {
+	{
 	 	// Empfangene Daten von der Device Instanz
 	    	$data = json_decode($JSONString);
 	    	$Result = false;
 	 	switch ($data->Function) {
 			case "getAccessData":
-				$AccessArray = Array();
-				$AccessArray["GatewayIP"] = $this->ReadPropertyString("GatewayIP");
-				$AccessArray["SecurityID"] = $this->ReadPropertyString("SecurityID");
-				$AccessArray["PresharedKey"] = $this->ReadPropertyString("PresharedKey");
-				$Result = $AccessArray;
+				$DeviceListArray = array();
+				$DeviceListArray = $this->DeviceList();
+				$Result = serialize($DeviceListArray);
 				break;
 			case "getConfiguratorData":
 				
@@ -72,5 +70,62 @@
 	    
 	// Beginn der Funktionen
 	
+	private function DeviceList()
+	{
+		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadPropertyString("PresharedKey");
+		$Identifier = "ip-symcon";
+		
+		$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001"';
+		$Response = exec($Message." 2>&1", $Output);
+		$DeviceArray = array();
+		If (is_array($Output)) {
+			If (isset($Output[3])) {
+				$Search = array("[", "]");
+				$Devices = str_replace($Search, "", $Output[3]);
+				$DeviceArray = explode(",", $Devices);
+				$DeviceInfoArray = array();
+				foreach ($DeviceArray as $DeviceID) {
+					$DeviceInfoArray[$DeviceID] = DeviceInfo($IP, $Key, $Identifier, $DeviceID);
+				}
+			}
+		}
+	return $DeviceInfoArray;
+	}
+
+	private function DeviceInfo($IP, $Key, $Identifier, $DeviceID)
+	{
+		$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
+		$Response = exec($Message." 2>&1", $Output);
+		$DeviceInfo = array();
+		If (is_array($Output)) {
+			If (isset($Output[3])) {
+				$data = json_decode($Output[3]);
+				$DeviceInfo["Name"] = $data->{'9001'};
+				$DeviceInfo["Typ"] = $data->{'3'}->{'1'};
+				$DeviceInfo["Firmware"] = $data->{'3'}->{'3'};
+				If (isset($data->{'3311'})) {
+					$DeviceInfo["Class"] = "Bulb";
+				}
+				elseif (isset($data->{'3311'})) {
+					$DeviceInfo["Class"] = "MotionSensor";
+				}
+				elseif (isset($data->{'3312'})) {
+					$DeviceInfo["Class"] = "Plug";
+				}
+				elseif (isset($data->{'15009'})) {
+					$DeviceInfo["Class"] = "Remote";
+				}
+				elseif (isset($data->{'15015'})) {
+					$DeviceInfo["Class"] = "Blind";
+				}
+				else {
+					$DeviceInfo["Class"] = "Unknown";
+				}
+			}
+		}
+	return $DeviceInfo;
+	}
+	    
 }
 ?>
