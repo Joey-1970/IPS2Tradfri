@@ -86,7 +86,7 @@
 				$DeviceArray = explode(",", $Devices);
 				$DeviceInfoArray = array();
 				foreach ($DeviceArray as $DeviceID) {
-					$DeviceInfoArray[$DeviceID] = DeviceInfo($IP, $Key, $Identifier, $DeviceID);
+					$DeviceInfoArray[$DeviceID] = $this->DeviceInfo($IP, $Key, $Identifier, $DeviceID);
 				}
 			}
 		}
