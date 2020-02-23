@@ -73,7 +73,7 @@
 	            	SetValueBoolean($this->GetIDForIdent($Ident), $Value);
 		break;
 	        case "Intensity":
-	            	$Value = min(254, max(0, $Value));
+	            	$Value = min(254, max(1, $Value));
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
