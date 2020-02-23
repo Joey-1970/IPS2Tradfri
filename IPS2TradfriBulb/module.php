@@ -13,9 +13,9 @@
 		$this->RegisterPropertyInteger("DeviceID", 0);
 		
 		$this->RegisterProfileInteger("Tradfri.Ambiente", "Information", "", "", 0, 3, 0);
-		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0xf1e0b5, "Alltag", "Information", 0xf1e0b5);
-		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0xf5faf6, "Fokus", "Information", 0xf5faf6);
-		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0xefd275, "Entspannung", "Information", 0xefd275);
+		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0, "Alltag", "Information", 0xf1e0b5);
+		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 1, "Fokus", "Information", 0xf5faf6);
+		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 2, "Entspannung", "Information", 0xefd275);
 		
 		// Status-Variablen anlegen
 		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
