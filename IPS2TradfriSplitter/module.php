@@ -60,7 +60,7 @@
 				$DeviceListArray = $this->DeviceList();
 				$Result = serialize($DeviceListArray);
 				break;
-			ase "DeviceState":
+			case "DeviceState":
 				$DeviceStateArray = array();
 				$DeviceStateArray = $this->DeviceState($data->DeviceID);
 				$Result = serialize($DeviceStateArray);
