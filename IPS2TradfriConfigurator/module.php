@@ -54,8 +54,10 @@
 			
 			$arrayCreate = array();
 			If (($DeviceArray[$i]["DeviceID"] >= 65537) AND ($DeviceArray[$i]["Class"] <> "Unknown")) {
-				$arrayCreate[] = array("moduleID" => 0, 
+				If ("Class" => $DeviceArray[$i]["Class"] == "Bulb") {
+					$arrayCreate[] = array("moduleID" => "{3B0E081A-A63E-7496-E304-A34C00790516}", 
 					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Open" => true) );
+				}
 				$arrayValues[] = array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Name" => $DeviceArray[$i]["Name"], "Firmware" => $DeviceArray[$i]["Firmware"], "Class" => $DeviceArray[$i]["Class"], "Typ" => $DeviceArray[$i]["Typ"],
 					       "instanceID" => $DeviceArray[$i]["Instance"], "create" => $arrayCreate);
 			}
@@ -107,14 +109,14 @@
 				$Devices[$i]["Class"] = $Device["Class"];
 				$Devices[$i]["DeviceID"] = $Key;
 				
-				$Devices[$i]["Instance"] = 0;//$this->GetGeCoSInstanceID($Key);
+				$Devices[$i]["Instance"] = $this->GetDeviceInstanceID($Key);
 				$i = $i + 1;
 			}
 		}
 	return serialize($Devices);;
 	}
 	
-	function GetStationInstanceID(string $StationID)
+	function GetDeviceInstanceID(string $DeviceID)
 	{
 		$guid = "{47286CAD-187A-6D88-89F0-BDA50CBF712F}";
 	    	$Result = 0;
@@ -123,8 +125,8 @@
 	    	$InstanceArray = @(IPS_GetInstanceListByModuleID($guid));
 	    	If (is_array($InstanceArray)) {
 			foreach($InstanceArray as $Module) {
-				If (strtolower(IPS_GetProperty($Module, "StationID")) == strtolower($StationID)) {
-					$this->SendDebug("GetStationInstanceID", "Gefundene Instanz: ".$Module, 0);
+				If (strtolower(IPS_GetProperty($Module, "DeviceID")) == $DeviceID) {
+					$this->SendDebug("GetDeviceInstanceID", "Gefundene Instanz: ".$Module, 0);
 					$Result = $Module;
 					break;
 				}
