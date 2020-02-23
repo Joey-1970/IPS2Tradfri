@@ -54,7 +54,7 @@
 			
 			$arrayCreate = array();
 			If (($DeviceArray[$i]["DeviceID"] >= 65537) AND ($DeviceArray[$i]["Class"] <> "Unknown")) {
-				If ("Class" => $DeviceArray[$i]["Class"] == "Bulb") {
+				If ($DeviceArray[$i]["Class"] == "Bulb") {
 					$arrayCreate[] = array("moduleID" => "{3B0E081A-A63E-7496-E304-A34C00790516}", 
 					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Open" => true) );
 				}
