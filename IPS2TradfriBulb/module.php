@@ -17,7 +17,7 @@
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 1, "Fokus", "Bulb", 0xf5faf6);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 2, "Entspannung", "Bulb", 0xefd275);
 		
-		$this->RegisterProfileInteger("Tradfri.Fadetime", "Clock", "", "", 0, 10, 0);
+		$this->RegisterProfileInteger("Tradfri.Fadetime", "Clock", "", "", 0, 10, 1);
 		
 		// Status-Variablen anlegen
 		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
