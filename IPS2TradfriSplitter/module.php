@@ -157,7 +157,7 @@
 				If (isset($data->{'3311'})) {
 					$DeviceInfo["Class"] = "Bulb";
 				}
-				elseif (isset($data->{'3311'})) {
+				elseif (isset($data->{'3300'})) {
 					$DeviceInfo["Class"] = "MotionSensor";
 				}
 				elseif (isset($data->{'3312'})) {
