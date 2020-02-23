@@ -12,6 +12,11 @@
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("DeviceID", 0);
 		
+		$this->RegisterProfileInteger("Tradfri.Ambiente", "Information", "", "", 0, 3, 1);
+		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0xf1e0b5, "Alltag", "Information", 0xf1e0b5);
+		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0xf5faf6, "Fokus", "Information", 0xf5faf6);
+		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0xefd275, "Entspannung", "Information", 0xefd275);
+		
 		// Status-Variablen anlegen
 		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
 	        $this->EnableAction("State");
@@ -19,7 +24,8 @@
 	        $this->RegisterVariableInteger("Intensity", "Intensity", "~Intensity.255", 20);
 	        $this->EnableAction("Intensity");
 		
-		
+		$this->RegisterVariableInteger("Ambiente", "Ambiente", "Tradfri.Ambiente", 30);
+	        $this->EnableAction("Ambiente");
         }
  	
 	public function GetConfigurationForm() 
@@ -73,6 +79,11 @@
 				SetValueBoolean($this->GetIDForIdent("State"), true);
 			}
 	            break;
+		case "Ambiente":
+	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
+	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
+		break;
 	        default:
 	            throw new Exception("Invalid Ident");
 	    }
@@ -80,7 +91,22 @@
 	    
 	// Beginn der Funktionen
 	
-	
+	private function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
+	{
+	        if (!IPS_VariableProfileExists($Name))
+	        {
+	            IPS_CreateVariableProfile($Name, 1);
+	        }
+	        else
+	        {
+	            $profile = IPS_GetVariableProfile($Name);
+	            if ($profile['ProfileType'] != 1)
+	                throw new Exception("Variable profile type does not match for profile " . $Name);
+	        }
+	        IPS_SetVariableProfileIcon($Name, $Icon);
+	        IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
+	        IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);        
+	}
 	    
 }
 ?>
