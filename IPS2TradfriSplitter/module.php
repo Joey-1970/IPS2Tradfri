@@ -101,7 +101,7 @@
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadPropertyString("PresharedKey");
 		$Identifier = "ip-symcon";
-		$AmmbienteArray = (0 => "f1e0b5", 1 => "f5faf6", 2 => "efd275");
+		$AmmbienteArray = array(0 => "f1e0b5", 1 => "f5faf6", 2 => "efd275");
 		$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5706": "'.$AmmbienteArray[$Value].'" }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
 		$Response = exec($Message." 2>&1", $Output);
 		$this->SendDebug("BulbAmbiente", "Ergebnis: ".serialize($Output), 0);
