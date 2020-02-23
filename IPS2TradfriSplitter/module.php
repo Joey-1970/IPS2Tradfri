@@ -70,7 +70,7 @@
 				$this->BulbAmbiente($data->DeviceID, $data->Value);
 				break;
 			case "BulbFadetime":
-				$this->BulbAmbiente($data->DeviceID, $data->Value);
+				$this->BulbFadetime($data->DeviceID, $data->Value);
 				break;
 		}
 	return $Result;
