@@ -16,9 +16,7 @@
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0, "Alltag", "Bulb", 0xf1e0b5);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 1, "Fokus", "Bulb", 0xf5faf6);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 2, "Entspannung", "Bulb", 0xefd275);
-		
-		$this->RegisterProfileInteger("Tradfri.Fadetime", "Clock", "", "", 0, 10, 1);
-		
+				
 		// Status-Variablen anlegen
 		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
 	        $this->EnableAction("State");
@@ -28,9 +26,6 @@
 		
 		$this->RegisterVariableInteger("Ambiente", "Ambiente", "Tradfri.Ambiente", 30);
 	        $this->EnableAction("Ambiente");
-		
-		$this->RegisterVariableInteger("Fadetime", "Fadetime", "Tradfri.Fadetime", 40);
-	        $this->EnableAction("Fadetime");
         }
  	
 	public function GetConfigurationForm() 
@@ -56,7 +51,7 @@
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SetStatus(102);
-			
+			$this->GetState();
 		}
 		else {
 			$this->SetStatus(104);
@@ -69,38 +64,42 @@
   		switch($Ident) {
 	        case "State":
 	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "SwitchBulb", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
+				"Function" => "BulbSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
 	            	SetValueBoolean($this->GetIDForIdent($Ident), $Value);
+			$this->GetState();
 		break;
 	        case "Intensity":
 	            	$Value = min(254, max(1, $Value));
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
-			If ($Value == 0) {
-				SetValueBoolean($this->GetIDForIdent("State"), false);
-			}
-			else {
-				SetValueBoolean($this->GetIDForIdent("State"), true);
-			}
+			$this->GetState();
 	            break;
 		case "Ambiente":
 	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $Value )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
+			$this->GetState();
 		break;
-		case "Fadetime":
-	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbFadetime", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $Value )));
-	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
-		break;
+		
 	        default:
 	            throw new Exception("Invalid Ident");
 	    }
 	}
 	    
 	// Beginn der Funktionen
-	
+	private function GetState()
+	{
+		$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+				"Function" => "DeviceState", "DeviceID" => $this->ReadPropertyInteger("DeviceID") )));
+		$this->SendDebug("GetState", "Ergebnis: ".$Result, 0);
+		$DeviceStateArray = array();
+		$DeviceStateArray = unserialize($Result);
+		
+		SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
+		SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
+	}
+	    
 	private function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
 	{
 	        if (!IPS_VariableProfileExists($Name))
