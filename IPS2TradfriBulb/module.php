@@ -12,7 +12,7 @@
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("DeviceID", 0);
 		
-		$this->RegisterProfileInteger("Tradfri.Ambiente", "Information", "", "", 0, 3, 1);
+		$this->RegisterProfileInteger("Tradfri.Ambiente", "Information", "", "", 0, 3, 0);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0xf1e0b5, "Alltag", "Information", 0xf1e0b5);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0xf5faf6, "Fokus", "Information", 0xf5faf6);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0xefd275, "Entspannung", "Information", 0xefd275);
