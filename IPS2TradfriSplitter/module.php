@@ -66,7 +66,9 @@
 			case "BulbIntensity":
 				$this->BulbIntensity($data->DeviceID, $data->Intensity);
 				break;
-			
+			case "BulbAmbiente":
+				$this->BulbAmbiente($data->DeviceID, $data->Value);
+				break;
 		}
 	return $Result;
 	}
@@ -90,6 +92,15 @@
 		$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5851": '.$Intensity.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
 		$Response = exec($Message." 2>&1", $Output);
 	}    
+	
+	private function BulbAmbiente($DeviceID, $Value)
+	{
+		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadPropertyString("PresharedKey");
+		$Identifier = "ip-symcon";
+		$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5706": '.$Value.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
+		$Response = exec($Message." 2>&1", $Output);
+	}        
 	    
 	private function DeviceList()
 	{
