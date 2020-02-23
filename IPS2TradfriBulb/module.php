@@ -96,8 +96,16 @@
 		$DeviceStateArray = array();
 		$DeviceStateArray = unserialize($Result);
 		
-		SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
-		SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
+		If (GetValueBoolean($this->GetIDForIdent("State")) <> $DeviceStateArray[5850]) {
+			SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
+		}
+		If (GetValueInteger($this->GetIDForIdent("Intensity")) <> $DeviceStateArray[5851]) {
+			SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
+		}
+		$AmmbienteArray = array("f1e0b5" => 0, "f5faf6 => 1", "efd275" => 2);
+		If (GetValueInteger($this->GetIDForIdent("Ambiente")) <> $AmmbienteArray[$DeviceStateArray[5706]]) {
+			SetValueInteger($this->GetIDForIdent("Ambiente"), $AmmbienteArray[$DeviceStateArray[5706]]);
+		}
 	}
 	    
 	private function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
