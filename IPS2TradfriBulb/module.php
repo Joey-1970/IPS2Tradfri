@@ -81,7 +81,7 @@
 	            break;
 		case "Ambiente":
 	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
+				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $Value )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 		break;
 	        default:
