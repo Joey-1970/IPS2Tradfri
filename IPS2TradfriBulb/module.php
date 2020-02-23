@@ -59,11 +59,11 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SetStatus(102);
 			$this->GetState();
-			$this->SetTimerInterval("Timer_1", 1000));
+			$this->SetTimerInterval("Timer_1", 1000);
 		}
 		else {
 			$this->SetStatus(104);
-			$this->SetTimerInterval("Timer_1", 0));
+			$this->SetTimerInterval("Timer_1", 0);
 		}	
 	}
 	
