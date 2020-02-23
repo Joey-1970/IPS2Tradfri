@@ -84,45 +84,53 @@
 	// Beginn der Funktionen
 	private function BulbSwitch($DeviceID, $State)
 	{
-		$this->SendDebug("SwitchBulb", "Ausfuehrung: ".$DeviceID, 0);
-		$IP = $this->ReadPropertyString("GatewayIP");
-		$Key = $this->ReadPropertyString("PresharedKey");
-		$Identifier = "ip-symcon";
-		$State = intval($State);
-		$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5850": '.$State.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
-		$Response = exec($Message." 2>&1", $Output);
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("SwitchBulb", "Ausfuehrung: ".$DeviceID, 0);
+			$IP = $this->ReadPropertyString("GatewayIP");
+			$Key = $this->ReadPropertyString("PresharedKey");
+			$Identifier = "ip-symcon";
+			$State = intval($State);
+			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5850": '.$State.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
+			$Response = exec($Message." 2>&1", $Output);
+		}
 	}
 	
 	private function BulbIntensity($DeviceID, $Intensity)
 	{
-		$this->SendDebug("BulbIntensity", "Ausfuehrung: ".$DeviceID, 0);
-		$IP = $this->ReadPropertyString("GatewayIP");
-		$Key = $this->ReadPropertyString("PresharedKey");
-		$Identifier = "ip-symcon";
-		$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5851": '.$Intensity.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
-		$Response = exec($Message." 2>&1", $Output);
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("BulbIntensity", "Ausfuehrung: ".$DeviceID, 0);
+			$IP = $this->ReadPropertyString("GatewayIP");
+			$Key = $this->ReadPropertyString("PresharedKey");
+			$Identifier = "ip-symcon";
+			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5851": '.$Intensity.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
+			$Response = exec($Message." 2>&1", $Output);
+		}
 	}    
 	
 	private function BulbAmbiente($DeviceID, $Value)
 	{
-		$this->SendDebug("BulbAmbiente", "Ausfuehrung: ".$DeviceID, 0);
-		$IP = $this->ReadPropertyString("GatewayIP");
-		$Key = $this->ReadPropertyString("PresharedKey");
-		$Identifier = "ip-symcon";
-		$AmmbienteArray = array(0 => "f1e0b5", 1 => "f5faf6", 2 => "efd275");
-		$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5706": "'.$AmmbienteArray[$Value].'" }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
-		$Response = exec($Message." 2>&1", $Output);
-		$this->SendDebug("BulbAmbiente", "Ergebnis: ".serialize($Output), 0);
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("BulbAmbiente", "Ausfuehrung: ".$DeviceID, 0);
+			$IP = $this->ReadPropertyString("GatewayIP");
+			$Key = $this->ReadPropertyString("PresharedKey");
+			$Identifier = "ip-symcon";
+			$AmmbienteArray = array(0 => "f1e0b5", 1 => "f5faf6", 2 => "efd275");
+			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5706": "'.$AmmbienteArray[$Value].'" }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
+			$Response = exec($Message." 2>&1", $Output);
+			$this->SendDebug("BulbAmbiente", "Ergebnis: ".serialize($Output), 0);
+		}
 	}        
 	
 	private function BulbFadetime($DeviceID, $Value)
 	{
-		$this->SendDebug("BulbFadetime", "Ausfuehrung: ".$DeviceID, 0);
-		$IP = $this->ReadPropertyString("GatewayIP");
-		$Key = $this->ReadPropertyString("PresharedKey");
-		$Identifier = "ip-symcon";
-		$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5712": '.$Value.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
-		$Response = exec($Message." 2>&1", $Output);
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("BulbFadetime", "Ausfuehrung: ".$DeviceID, 0);
+			$IP = $this->ReadPropertyString("GatewayIP");
+			$Key = $this->ReadPropertyString("PresharedKey");
+			$Identifier = "ip-symcon";
+			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5712": '.$Value.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
+			$Response = exec($Message." 2>&1", $Output);
+		}
 	}        
 	
 	private function DeviceState($DeviceID)
