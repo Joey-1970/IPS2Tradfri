@@ -109,16 +109,18 @@
 				$Devices[$i]["Class"] = $Device["Class"];
 				$Devices[$i]["DeviceID"] = $Key;
 				
-				$Devices[$i]["Instance"] = $this->GetDeviceInstanceID($Key);
+				$Devices[$i]["Instance"] = $this->GetDeviceInstanceID($Key, $Device["Class"]);
 				$i = $i + 1;
 			}
 		}
 	return serialize($Devices);;
 	}
 	
-	function GetDeviceInstanceID(string $DeviceID)
+	function GetDeviceInstanceID(int $DeviceID, string $Class)
 	{
-		$guid = "{47286CAD-187A-6D88-89F0-BDA50CBF712F}";
+		If ($Class == "Bulb") {
+			$guid = "{3B0E081A-A63E-7496-E304-A34C00790516}";
+		}
 	    	$Result = 0;
 	    	// Modulinstanzen suchen
 	    	$InstanceArray = array();
