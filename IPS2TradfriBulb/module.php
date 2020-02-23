@@ -2,7 +2,13 @@
     // Klassendefinition
     class IPS2TradfriBulb extends IPSModule 
     {
-	   
+	public function Destroy() 
+	{
+		//Never delete this line!
+		parent::Destroy();
+		$this->SetTimerInterval("Timer_1", 0);
+	}  
+	    
 	// Überschreibt die interne IPS_Create($id) Funktion
         public function Create() 
         {
@@ -11,6 +17,7 @@
 		$this->ConnectParent("{562389F8-739F-644A-4FC7-36F2CE3AFE4F}");
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("DeviceID", 0);
+		$this->RegisterTimer("Timer_1", 0, 'IPS2TradfriBulb_GetState($_IPS["TARGET"]);');
 		
 		$this->RegisterProfileInteger("Tradfri.Ambiente", "Bulb", "", "", 0, 3, 0);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0, "Alltag", "Bulb", 0xf1e0b5);
@@ -52,10 +59,11 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SetStatus(102);
 			$this->GetState();
+			$this->SetTimerInterval("Timer_1", 1000));
 		}
 		else {
 			$this->SetStatus(104);
-			
+			$this->SetTimerInterval("Timer_1", 0));
 		}	
 	}
 	
@@ -88,23 +96,25 @@
 	}
 	    
 	// Beginn der Funktionen
-	private function GetState()
+	public function GetState()
 	{
-		$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "DeviceState", "DeviceID" => $this->ReadPropertyInteger("DeviceID") )));
-		$this->SendDebug("GetState", "Ergebnis: ".$Result, 0);
-		$DeviceStateArray = array();
-		$DeviceStateArray = unserialize($Result);
-		
-		If (GetValueBoolean($this->GetIDForIdent("State")) <> $DeviceStateArray[5850]) {
-			SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
-		}
-		If (GetValueInteger($this->GetIDForIdent("Intensity")) <> $DeviceStateArray[5851]) {
-			SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
-		}
-		$AmmbienteArray = array("f1e0b5" => 0, "f5faf6" => 1, "efd275" => 2);
-		If (GetValueInteger($this->GetIDForIdent("Ambiente")) <> $AmmbienteArray[$DeviceStateArray[5706]]) {
-			SetValueInteger($this->GetIDForIdent("Ambiente"), $AmmbienteArray[$DeviceStateArray[5706]]);
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+					"Function" => "DeviceState", "DeviceID" => $this->ReadPropertyInteger("DeviceID") )));
+			$this->SendDebug("GetState", "Ergebnis: ".$Result, 0);
+			$DeviceStateArray = array();
+			$DeviceStateArray = unserialize($Result);
+
+			If (GetValueBoolean($this->GetIDForIdent("State")) <> $DeviceStateArray[5850]) {
+				SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
+			}
+			If (GetValueInteger($this->GetIDForIdent("Intensity")) <> $DeviceStateArray[5851]) {
+				SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
+			}
+			$AmmbienteArray = array("f1e0b5" => 0, "f5faf6" => 1, "efd275" => 2);
+			If (GetValueInteger($this->GetIDForIdent("Ambiente")) <> $AmmbienteArray[$DeviceStateArray[5706]]) {
+				SetValueInteger($this->GetIDForIdent("Ambiente"), $AmmbienteArray[$DeviceStateArray[5706]]);
+			}
 		}
 	}
 	    
