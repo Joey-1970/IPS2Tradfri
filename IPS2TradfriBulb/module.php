@@ -12,10 +12,12 @@
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("DeviceID", 0);
 		
-		$this->RegisterProfileInteger("Tradfri.Ambiente", "Information", "", "", 0, 3, 0);
-		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0, "Alltag", "Information", 0xf1e0b5);
-		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 1, "Fokus", "Information", 0xf5faf6);
-		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 2, "Entspannung", "Information", 0xefd275);
+		$this->RegisterProfileInteger("Tradfri.Ambiente", "Bulb", "", "", 0, 3, 0);
+		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0, "Alltag", "Bulb", 0xf1e0b5);
+		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 1, "Fokus", "Bulb", 0xf5faf6);
+		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 2, "Entspannung", "Bulb", 0xefd275);
+		
+		$this->RegisterProfileInteger("Tradfri.Fadetime", "Clock", "", "", 0, 10, 1);
 		
 		// Status-Variablen anlegen
 		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
@@ -26,6 +28,9 @@
 		
 		$this->RegisterVariableInteger("Ambiente", "Ambiente", "Tradfri.Ambiente", 30);
 	        $this->EnableAction("Ambiente");
+		
+		$this->RegisterVariableInteger("Fadetime", "Fadetime", "Tradfri.Fadetime", 40);
+	        $this->EnableAction("Fadetime");
         }
  	
 	public function GetConfigurationForm() 
@@ -82,6 +87,11 @@
 		case "Ambiente":
 	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $Value )));
+	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
+		break;
+		case "Fadetime":
+	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+				"Function" => "BulbFadetime", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $Value )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 		break;
 	        default:
