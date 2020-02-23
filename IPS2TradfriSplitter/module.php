@@ -76,6 +76,7 @@
 	// Beginn der Funktionen
 	private function SwitchBulb($DeviceID, $State)
 	{
+		$this->SendDebug("SwitchBulb", "Ausfuehrung: ".$DeviceID, 0);
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadPropertyString("PresharedKey");
 		$Identifier = "ip-symcon";
@@ -86,6 +87,7 @@
 	
 	private function BulbIntensity($DeviceID, $Intensity)
 	{
+		$this->SendDebug("BulbIntensity", "Ausfuehrung: ".$DeviceID, 0);
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadPropertyString("PresharedKey");
 		$Identifier = "ip-symcon";
@@ -95,6 +97,7 @@
 	
 	private function BulbAmbiente($DeviceID, $Value)
 	{
+		$this->SendDebug("BulbAmbiente", "Ausfuehrung: ".$DeviceID, 0);
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadPropertyString("PresharedKey");
 		$Identifier = "ip-symcon";
@@ -104,6 +107,7 @@
 	    
 	private function DeviceList()
 	{
+		$this->SendDebug("DeviceList", "Ausfuehrung", 0);
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadPropertyString("PresharedKey");
 		$Identifier = "ip-symcon";
