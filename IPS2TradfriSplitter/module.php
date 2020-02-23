@@ -60,8 +60,13 @@
 				$DeviceListArray = $this->DeviceList();
 				$Result = serialize($DeviceListArray);
 				break;
-			case "SwitchBulb":
-				$this->SwitchBulb($data->DeviceID, $data->State);
+			ase "DeviceState":
+				$DeviceStateArray = array();
+				$DeviceStateArray = $this->DeviceState($data->DeviceID);
+				$Result = serialize($DeviceStateArray);
+				break;
+			case "BulbSwitch":
+				$this->BulbSwitch($data->DeviceID, $data->State);
 				break;
 			case "BulbIntensity":
 				$this->BulbIntensity($data->DeviceID, $data->Intensity);
@@ -77,7 +82,7 @@
 	}
 	    
 	// Beginn der Funktionen
-	private function SwitchBulb($DeviceID, $State)
+	private function BulbSwitch($DeviceID, $State)
 	{
 		$this->SendDebug("SwitchBulb", "Ausfuehrung: ".$DeviceID, 0);
 		$IP = $this->ReadPropertyString("GatewayIP");
@@ -119,6 +124,50 @@
 		$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5712": '.$Value.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
 		$Response = exec($Message." 2>&1", $Output);
 	}        
+	
+	private function DeviceState($DeviceID)
+	{
+		$this->SendDebug("DeviceState", "Ausfuehrung: ".$DeviceID, 0);
+		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadPropertyString("PresharedKey");
+		$Identifier = "ip-symcon";
+		
+    		$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
+    		$Response = exec($Message." 2>&1", $Output);
+    		$ResultArray = array();
+    		If (is_array($Output)) {
+        		If (isset($Output[3])) {
+            			$data = json_decode($Output[3]);
+            
+            			If (isset($data->{'3311'})) {
+                			$StateArray = $data->{'3311'}{'0'};
+                    			foreach ($StateArray as $Key => $State) {
+                        			$ResultArray[$Key] = $State;
+                    			}
+            			}
+            			elseif (isset($data->{'3300'})) {
+               				$StateArray = $data->{'3300'}{'0'};
+                    			foreach ($StateArray as $Key => $State) {
+                        			$ResultArray[$Key] = $State;
+                    			}
+            			}
+            			elseif (isset($data->{'3312'})) {
+                			$StateArray = $data->{'3312'}{'0'};
+                    			foreach ($StateArray as $Key => $State) {
+                        			$ResultArray[$Key] = $State;
+                    			}
+            			}
+            			elseif (isset($data->{'15015'})) {
+                			$StateArray = $data->{'15015'}{'0'};
+                    			foreach ($StateArray as $Key => $State) {
+                        			$ResultArray[$Key] = $State;
+                    			}
+            			}
+        		}
+    		}
+	return $ResultArray;
+	} 
+	    
 	private function DeviceList()
 	{
 		$this->SendDebug("DeviceList", "Ausfuehrung", 0);
