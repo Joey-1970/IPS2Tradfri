@@ -12,8 +12,8 @@
 		$this->RegisterPropertyString("GatewayIP", "Gateway IP");
 		$this->RegisterPropertyString("SecurityID", "Security ID");
 		
-		$this->WriteAttributeString("PresharedKey", "");
-		$this->WriteAttributeString("Identifier", "");
+		$this->RegisterAttributeString("PresharedKey", "");
+		$this->RegisterAttributeString("Identifier", "");
 		
 		$this->RegisterPropertyString("PresharedKey", "Preshared Key");
 		$this->RegisterPropertyString("Identifier", "ip-symcon");
