@@ -263,7 +263,7 @@
 			$this->SendDebug("GetPresharedKey", "Ausfuehrung", 0);
 			$IP = $this->ReadPropertyString("GatewayIP");
 			$SecurityID = $this->ReadPropertyString("SecurityID");
-			$Message = 'sudo coap-client -m post -u "Client_identity" -k "'.$SecurityID.'" -e "{\"9090\":\"$TF_USERNAME\"}" "coaps://$'.$IP.':5684/15011/9063"';
+			$Message = 'sudo coap-client -m post -u "Client_identity" -k "'.$SecurityID.'" -e \'{"9090":"'.$Identifier.'"}\' "coaps://"'.$IP.'":5684/15011/9063"';
 			$Response = exec($Message." 2>&1", $Output);
 			If (is_array($Output)) {
 				If (isset($Output[3])) {
