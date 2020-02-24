@@ -30,9 +30,10 @@
 		$arrayElements[] = array("type" => "Label", "label" => "Tradfri-Gateway-Zugriffsdaten");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "GatewayIP", "caption" => "Gateway IP");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "SecurityID", "caption" => "Security ID");
-		
-		$arrayElements[] = array("type" => "Label", "label" => "Schlüsselwort: ".$this-ReadAttributeString("Identifier"));
-		$arrayElements[] = array("type" => "Label", "label" => "Schlüssel: ".$this->ReadAttributeString("GetPresharedKey"));
+		$Identifier = "Schlüsselwort: ".($this-ReadAttributeString("Identifier"));
+		$PresharedKey = "Schlüssel: ".($this->ReadAttributeString("PresharedKey"));
+		$arrayElements[] = array("type" => "Label", "label" => $Identifier);
+		$arrayElements[] = array("type" => "Label", "label" => $PresharedKey);
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "PresharedKey", "caption" => "Preshared Key");
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
@@ -267,7 +268,7 @@
             					// Key wurde generiert
 						$this->SendDebug("GetPresharedKey", "Key wurde erfolgreich generiert", 0);
             					$Result = $data->{'9091'};
-						$this->WriteAttributeString("GetPresharedKey", $data->{'9091'});
+						$this->WriteAttributeString("PresharedKey", $data->{'9091'});
 						$this->WriteAttributeString("Identifier", $Identifier);
         				}
         				else {
