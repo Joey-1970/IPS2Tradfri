@@ -12,6 +12,9 @@
 		$this->RegisterPropertyString("GatewayIP", "Gateway IP");
 		$this->RegisterPropertyString("SecurityID", "Security ID");
 		
+		$this->WriteAttributeString("PresharedKey", "");
+		$this->WriteAttributeString("Identifier", "");
+		
 		$this->RegisterPropertyString("PresharedKey", "Preshared Key");
 		$this->RegisterPropertyString("Identifier", "ip-symcon");
 		
@@ -30,7 +33,7 @@
 		$arrayElements[] = array("type" => "Label", "label" => "Tradfri-Gateway-Zugriffsdaten");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "GatewayIP", "caption" => "Gateway IP");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "SecurityID", "caption" => "Security ID");
-		$Identifier = "Schlüsselwort: ".($this-ReadAttributeString("Identifier"));
+		$Identifier = "Schlüsselwort: ".($this->ReadAttributeString("Identifier"));
 		$PresharedKey = "Schlüssel: ".($this->ReadAttributeString("PresharedKey"));
 		$arrayElements[] = array("type" => "Label", "label" => $Identifier);
 		$arrayElements[] = array("type" => "Label", "label" => $PresharedKey);
