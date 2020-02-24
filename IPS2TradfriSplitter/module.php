@@ -234,6 +234,32 @@
 		}
 	return $DeviceInfo;
 	}
+	
+	private function TestPresharedKey()
+	{
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("TestPresharedKey", "Ausfuehrung", 0);
+			$IP = $this->ReadPropertyString("GatewayIP");
+			$Key = $this->ReadPropertyString("PresharedKey");
+			$Identifier = $this->ReadPropertyString("Identifier");
+			$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps:///'.$IP.':5684/15001" -v 9 -B 10';
+			$Response = exec($Message." 2>&1", $Output);
+			$this->SendDebug("TestPresharedKey", "Ergebnis: ".$Output, 0);
+		}
+	} 
 	    
+	private function GetPresharedKey()
+	{
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("GetPresharedKey", "Ausfuehrung", 0);
+			$IP = $this->ReadPropertyString("GatewayIP");
+			$SecurityID = $this->ReadPropertyString("SecurityID");
+			$Identifier = $this->ReadPropertyString("Identifier");
+			$Message = 'sudo coap-client -m post -u "Client_identity" -k "'.$SecurityID.'" -e "{\"9090\":\"$TF_USERNAME\"}" "coaps://$'.$IP.':5684/15011/9063"';
+			$Response = exec($Message." 2>&1", $Output);
+			$this->SendDebug("GetPresharedKey", "Ergebnis: ".$Output, 0);
+		}
+	}     
+
 }
 ?>
