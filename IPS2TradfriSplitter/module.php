@@ -258,6 +258,7 @@
 	    
 	public function GetPresharedKey(string $Identifier)
 	{
+		$Result = false;
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SendDebug("GetPresharedKey", "Ausfuehrung", 0);
 			$IP = $this->ReadPropertyString("GatewayIP");
