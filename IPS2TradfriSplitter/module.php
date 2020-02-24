@@ -11,6 +11,7 @@
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyString("GatewayIP", "Gateway IP");
 		$this->RegisterPropertyString("SecurityID", "Security ID");
+		
 		$this->RegisterPropertyString("PresharedKey", "Preshared Key");
 		$this->RegisterPropertyString("Identifier", "ip-symcon");
 		
@@ -29,6 +30,9 @@
 		$arrayElements[] = array("type" => "Label", "label" => "Tradfri-Gateway-Zugriffsdaten");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "GatewayIP", "caption" => "Gateway IP");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "SecurityID", "caption" => "Security ID");
+		
+		$arrayElements[] = array("type" => "Label", "label" => "Schlüsselwort: ".$this-ReadAttributeString("Identifier"));
+		$arrayElements[] = array("type" => "Label", "label" => "Schlüssel: ".$this->ReadAttributeString("GetPresharedKey"));
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "PresharedKey", "caption" => "Preshared Key");
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
@@ -248,7 +252,7 @@
 		}
 	} 
 	    
-	private function GetPresharedKey(string $Identifier)
+	public function GetPresharedKey(string $Identifier)
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SendDebug("GetPresharedKey", "Ausfuehrung", 0);
