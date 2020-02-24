@@ -257,8 +257,23 @@
 			$Identifier = $this->ReadPropertyString("Identifier");
 			$Message = 'sudo coap-client -m post -u "Client_identity" -k "'.$SecurityID.'" -e "{\"9090\":\"$TF_USERNAME\"}" "coaps://$'.$IP.':5684/15011/9063"';
 			$Response = exec($Message." 2>&1", $Output);
-			$this->SendDebug("GetPresharedKey", "Ergebnis: ".$Output, 0);
+			If (is_array($Output)) {
+				If (isset($Output[3])) {
+					$data = json_decode($Output[3]);
+        				If (isset($data)) {
+            					// Key wurde generiert
+						$this->SendDebug("GetPresharedKey", "Key wurde erfolgreich generiert", 0);
+            					$Result = $data->{'9091'};
+        				}
+        				else {
+            					// Key konnte nicht generiert werden
+						$this->SendDebug("GetPresharedKey", "Key konnte nicht generiert werden!", 0);
+            					$Result = false;
+        				}
+    				}
+			}
 		}
+	return $Result;
 	}     
 
 }
