@@ -44,7 +44,7 @@
 		$arrayActions[] = array("type" => "ValidationTextBox", "name" => "Identifier", "caption" => $Identifier);
 		$arrayActions[] = array("type" => "Button", "name" => "Button", "caption" => "Schlüssel erzeugen", "onClick" => "IPS2TradfriSplitter_GetPresharedKey($id, $Identifier);");
         	
- 		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements), "actions" => $arrayActions)); 		 
+ 		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements, "actions" => $arrayActions)); 		 
  	}       
 	   
         // Überschreibt die intere IPS_ApplyChanges($id) Funktion
