@@ -37,9 +37,14 @@
 		$PresharedKey = "Schlüssel: ".($this->ReadAttributeString("PresharedKey"));
 		$arrayElements[] = array("type" => "Label", "label" => $Identifier);
 		$arrayElements[] = array("type" => "Label", "label" => $PresharedKey);
-		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "PresharedKey", "caption" => "Preshared Key");
-		
- 		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
+		//$arrayElements[] = array("type" => "ValidationTextBox", "name" => "PresharedKey", "caption" => "Preshared Key");
+		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+		$arrayActions = array();
+		$arrayActions[] = array("type" => "Label", "label" => "Zur Erzeugung eines neuen Schlüssel, Schlüsselwort eingeben");
+		$arrayActions[] = array("type" => "ValidationTextBox", "name" => "Identifier", "caption" => $Identifier);
+		$arrayActions[] = array("type" => "Button", "name" => "Button", "caption" => "Schlüssel erzeugen", "onClick": "IPS2TradfriSplitter_GetPresharedKey($id, $Identifier);");
+        	
+ 		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements), "actions" => $arrayActions)); 		 
  	}       
 	   
         // Überschreibt die intere IPS_ApplyChanges($id) Funktion
@@ -260,7 +265,7 @@
 	{
 		$Result = false;
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			$this->SendDebug("GetPresharedKey", "Ausfuehrung", 0);
+			$this->SendDebug("GetPresharedKey", "Ausfuehrung mit Schluesselwort: ".$Identifier, 0);
 			$IP = $this->ReadPropertyString("GatewayIP");
 			$SecurityID = $this->ReadPropertyString("SecurityID");
 			$Message = 'sudo coap-client -m post -u "Client_identity" -k "'.$SecurityID.'" -e \'{"9090":"'.$Identifier.'"}\' "coaps://"'.$IP.'":5684/15011/9063"';
@@ -274,6 +279,7 @@
             					$Result = $data->{'9091'};
 						$this->WriteAttributeString("PresharedKey", $data->{'9091'});
 						$this->WriteAttributeString("Identifier", $Identifier);
+						$this->ReloadForm();
         				}
         				else {
             					// Key konnte nicht generiert werden
