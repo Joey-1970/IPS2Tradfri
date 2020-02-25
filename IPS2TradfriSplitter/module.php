@@ -42,7 +42,7 @@
 		$arrayActions = array();
 		$arrayActions[] = array("type" => "Label", "label" => "Zur Erzeugung eines neuen Schlüssel, Schlüsselwort eingeben");
 		$arrayActions[] = array("type" => "ValidationTextBox", "name" => "NewKeyWord", "caption" => "Neues Schlüsselwort");
-		$arrayActions[] = array("type" => "Button", "name" => "Button", "caption" => "Schlüssel erzeugen", "onClick" => "IPS2TradfriSplitter_GetPresharedKey($id, $NewKeyWord);");
+		$arrayActions[] = array("type" => "Button", "name" => "Button", "caption" => "Schlüssel erzeugen", "onClick" => 'IPS2TradfriSplitter_GetPresharedKey($id, $NewKeyWord);');
         	
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements, "actions" => $arrayActions)); 		 
  	}       
