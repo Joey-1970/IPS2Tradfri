@@ -53,7 +53,7 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$Key = $this->ReadAttributeString("PresharedKey");
 			$Identifier = $this->ReadAttributeString("Identifier");
-			If ((strlen($Identifier) > 0) AND (strlen($Key) = 16)) {
+			If ((strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
 				$this->SetStatus(102);
 			}
 			else {
