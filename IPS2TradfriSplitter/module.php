@@ -27,7 +27,7 @@
 				
 		$arrayElements = array(); 
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
-		$arrayElements[] = array("type" => "Label", "label" => "Tradfri-Gateway-Zugriffsdaten");
+		$arrayElements[] = array("type" => "Label", "label" => "Tradfri-Gateway-Zugangsdaten");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "GatewayIP", "caption" => "Gateway IP");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "SecurityID", "caption" => "Security ID (auf der Unterseite des Gateway)");
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
@@ -37,9 +37,9 @@
 		$arrayElements[] = array("type" => "Label", "label" => $Identifier);
 		$arrayElements[] = array("type" => "Label", "label" => $PresharedKey);
 		$arrayActions = array();
-		$arrayActions[] = array("type" => "Label", "label" => "Zur Erzeugung eines neuen Schlüssel, Schlüsselwort eingeben");
+		$arrayActions[] = array("type" => "Label", "label" => "Zur Erzeugung neuer Zugangsdaten: Selbst gewähltes Schlüsselwort eingeben, Button betätigen");
 		$arrayActions[] = array("type" => "ValidationTextBox", "name" => "NewKeyWord", "caption" => "Neues Schlüsselwort");
-		$arrayActions[] = array("type" => "Button", "name" => "Button", "caption" => "Schlüssel erzeugen", "onClick" => 'IPS2TradfriSplitter_GetPresharedKey($id, $NewKeyWord);');
+		$arrayActions[] = array("type" => "Button", "name" => "Button", "caption" => "Zugsngsdaten erzeugen", "onClick" => 'IPS2TradfriSplitter_GetPresharedKey($id, $NewKeyWord);');
         	
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements, "actions" => $arrayActions)); 		 
  	}       
