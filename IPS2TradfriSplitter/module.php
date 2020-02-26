@@ -33,6 +33,8 @@
 		$arrayElements[] = array("type" => "Label", "label" => "Tradfri-Gateway-Zugriffsdaten");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "GatewayIP", "caption" => "Gateway IP");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "SecurityID", "caption" => "Security ID (auf der Unterseite des Gateway)");
+		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "Label", "label" => "Vom Modul erzeugte Zugangsdaten");
 		$Identifier = "Schlüsselwort: ".($this->ReadAttributeString("Identifier"));
 		$PresharedKey = "Schlüssel: ".($this->ReadAttributeString("PresharedKey"));
 		$arrayElements[] = array("type" => "Label", "label" => $Identifier);
