@@ -14,10 +14,6 @@
 		
 		$this->RegisterAttributeString("PresharedKey", "");
 		$this->RegisterAttributeString("Identifier", "");
-		
-		$this->RegisterPropertyString("PresharedKey", "Preshared Key");
-		$this->RegisterPropertyString("Identifier", "ip-symcon");
-		
         }
  	
 	public function GetConfigurationForm() 
@@ -27,6 +23,7 @@
 		$arrayStatus[] = array("code" => 102, "icon" => "active", "caption" => "Instanz ist aktiv");
 		$arrayStatus[] = array("code" => 104, "icon" => "inactive", "caption" => "Instanz ist inaktiv");
 		$arrayStatus[] = array("code" => 202, "icon" => "error", "caption" => "Kommunikationfehler!");
+		$arrayStatus[] = array("code" => 203, "icon" => "error", "caption" => "Fehlerhafter Key!");
 				
 		$arrayElements = array(); 
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
@@ -54,7 +51,15 @@
             	parent::ApplyChanges();
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			$this->SetStatus(102);
+			$Key = $this->ReadAttributeString("PresharedKey");
+			$Identifier = $this->ReadAttributeString("Identifier");
+			If ((strlen($Identifier) > 0) AND (strlen($Key) = 16)) {
+				$this->SetStatus(102);
+			}
+			else {
+				$this->SendDebug("ApplyChanges", "Fehlerhafter Key!", 0);
+				$this->SetStatus(203);
+			}
 			
 		}
 		else {
