@@ -32,13 +32,11 @@
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
 		$arrayElements[] = array("type" => "Label", "label" => "Tradfri-Gateway-Zugriffsdaten");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "GatewayIP", "caption" => "Gateway IP");
-		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "SecurityID", "caption" => "Security ID");
+		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "SecurityID", "caption" => "Security ID (auf der Unterseite des Gateway)");
 		$Identifier = "Schlüsselwort: ".($this->ReadAttributeString("Identifier"));
 		$PresharedKey = "Schlüssel: ".($this->ReadAttributeString("PresharedKey"));
 		$arrayElements[] = array("type" => "Label", "label" => $Identifier);
 		$arrayElements[] = array("type" => "Label", "label" => $PresharedKey);
-		//$arrayElements[] = array("type" => "ValidationTextBox", "name" => "PresharedKey", "caption" => "Preshared Key");
-		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arrayActions = array();
 		$arrayActions[] = array("type" => "Label", "label" => "Zur Erzeugung eines neuen Schlüssel, Schlüsselwort eingeben");
 		$arrayActions[] = array("type" => "ValidationTextBox", "name" => "NewKeyWord", "caption" => "Neues Schlüsselwort");
