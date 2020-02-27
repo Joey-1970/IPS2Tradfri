@@ -72,6 +72,7 @@
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SetStatus(102);
+			$this->GetDeviceInfo();
 			$this->GetState();
 			$this->SetTimerInterval("Timer_1", 1000);
 		}
