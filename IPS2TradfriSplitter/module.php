@@ -84,6 +84,11 @@
 				$DeviceStateArray = $this->DeviceState($data->DeviceID);
 				$Result = serialize($DeviceStateArray);
 				break;
+			case "DeviceInfo":
+				$DeviceInfoArray = array();
+				$DeviceInfoArray = $this->DeviceInfo($data->DeviceID);
+				$Result = serialize($DeviceInfoArray);
+				break;
 			case "BulbSwitch":
 				$this->BulbSwitch($data->DeviceID, $data->State);
 				break;
@@ -212,15 +217,18 @@
 				$DeviceArray = explode(",", $Devices);
 				$DeviceInfoArray = array();
 				foreach ($DeviceArray as $DeviceID) {
-					$DeviceInfoArray[$DeviceID] = $this->DeviceInfo($IP, $Key, $Identifier, $DeviceID);
+					$DeviceInfoArray[$DeviceID] = $this->DeviceInfo($DeviceID);
 				}
 			}
 		}
 	return $DeviceInfoArray;
 	}
 
-	private function DeviceInfo($IP, $Key, $Identifier, $DeviceID)
+	private function DeviceInfo($DeviceID)
 	{
+		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadAttributeString("PresharedKey");
+		$Identifier = $this->ReadAttributeString("Identifier");
 		$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
 		$Response = exec($Message." 2>&1", $Output);
 		$DeviceInfo = array();
