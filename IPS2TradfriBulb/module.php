@@ -19,6 +19,10 @@
 		$this->RegisterPropertyInteger("DeviceID", 0);
 		$this->RegisterTimer("Timer_1", 0, 'IPS2TradfriBulb_GetState($_IPS["TARGET"]);');
 		
+		$this->RegisterAttributeString("Name", "");
+		$this->RegisterAttributeString("Typ", "");
+		$this->RegisterAttributeString("Firmware", "");
+		
 		$this->RegisterProfileInteger("Tradfri.Ambiente", "Bulb", "", "", 0, 3, 0);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0, "Alltag", "Bulb", 0xf1e0b5);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 1, "Fokus", "Bulb", 0xf5faf6);
@@ -33,6 +37,9 @@
 		
 		$this->RegisterVariableInteger("Ambiente", "Ambiente", "Tradfri.Ambiente", 30);
 	        $this->EnableAction("Ambiente");
+		
+		$this->RegisterVariableInteger("Color", "Farbe", "~HexColor", 40);
+           	$this->EnableAction("Color");
         }
  	
 	public function GetConfigurationForm() 
@@ -46,6 +53,10 @@
 		$arrayElements = array(); 
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "DeviceID", "caption" => "Device ID");
+		
+		$arrayElements[] = array("type" => "Label", "label" => "Name: ".($this->ReadAttributeString("Name")); 
+		$arrayElements[] = array("type" => "Label", "label" => "Typ: ".($this->ReadAttributeString("Typ")); 
+		$arrayElements[] = array("type" => "Label", "label" => "Firmware: ".($this->ReadAttributeString("Firmware")); 
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arrayElements[] = array("type" => "Label", "label" => "Test Center"); 
 		$arrayElements[] = array("type" => "TestCenter", "name" => "TestCenter");
@@ -92,7 +103,12 @@
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
-		
+		case "Color":
+	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => dechex($Value) )));
+	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
+			$this->GetState();
+		break;
 	        default:
 	            throw new Exception("Invalid Ident");
 	    }
@@ -115,11 +131,28 @@
 				SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
 			}
 			$AmmbienteArray = array("f1e0b5" => 0, "f5faf6" => 1, "efd275" => 2);
-			If (GetValueInteger($this->GetIDForIdent("Ambiente")) <> $AmmbienteArray[$DeviceStateArray[5706]]) {
-				SetValueInteger($this->GetIDForIdent("Ambiente"), $AmmbienteArray[$DeviceStateArray[5706]]);
+			if (array_key_exists($AmmbienteArray[$DeviceStateArray[5706]], $AmmbienteArray)) {
+				If (GetValueInteger($this->GetIDForIdent("Ambiente")) <> $AmmbienteArray[$DeviceStateArray[5706]]) {
+					SetValueInteger($this->GetIDForIdent("Ambiente"), $AmmbienteArray[$DeviceStateArray[5706]]);
+				}
 			}
 		}
 	}
+	
+	private function GetDeviceInfo()
+	{
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+					"Function" => "DeviceInfo", "DeviceID" => $this->ReadPropertyInteger("DeviceID") )));
+			$this->SendDebug("GetDeviceInfo", "Ergebnis: ".$Result, 0);
+			$DeviceInfo = array();
+			$DeviceInfo = unserialize($Result);
+			$this->WriteAttributeString("Name", $DeviceInfo["Name"]);
+			$this->WriteAttributeString("Typ", $DeviceInfo["Typ"]);
+			$this->WriteAttributeString("Firmware", $DeviceInfo["Firmware"]);
+			//$this->ReloadForm();
+		}
+	}    
 	    
 	private function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
 	{
