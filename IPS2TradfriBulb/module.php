@@ -138,8 +138,8 @@
 					SetValueInteger($this->GetIDForIdent("Ambiente"), $AmmbienteArray[$DeviceStateArray[5706]]);
 				}
 			}
-			If (GetValueInteger($this->GetIDForIdent("Color")) <> $DeviceStateArray[5706]) {
-				SetValueInteger($this->GetIDForIdent("Color"), $DeviceStateArray[5706]);
+			If (GetValueInteger($this->GetIDForIdent("Color")) <> hexdec($DeviceStateArray[5706])) {
+				SetValueInteger($this->GetIDForIdent("Color"), hexdec($DeviceStateArray[5706]));
 			}
 		}
 	}
