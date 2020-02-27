@@ -134,7 +134,7 @@
 	private function BulbAmbiente($DeviceID, $Value)
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			$this->SendDebug("BulbAmbiente", "Ausfuehrung: ".$DeviceID, 0);
+			$this->SendDebug("BulbAmbiente", "Ausfuehrung: ".$DeviceID." - ".$Value, 0);
 			$IP = $this->ReadPropertyString("GatewayIP");
 			$Key = $this->ReadAttributeString("PresharedKey");
 			$Identifier = $this->ReadAttributeString("Identifier");
