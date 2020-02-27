@@ -54,9 +54,9 @@
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "DeviceID", "caption" => "Device ID");
 		
-		$arrayElements[] = array("type" => "Label", "label" => "Name: ".($this->ReadAttributeString("Name")); 
-		$arrayElements[] = array("type" => "Label", "label" => "Typ: ".($this->ReadAttributeString("Typ")); 
-		$arrayElements[] = array("type" => "Label", "label" => "Firmware: ".($this->ReadAttributeString("Firmware")); 
+		$arrayElements[] = array("type" => "Label", "label" => "Name: ".$this->ReadAttributeString("Name")); 
+		$arrayElements[] = array("type" => "Label", "label" => "Typ: ".$this->ReadAttributeString("Typ")); 
+		$arrayElements[] = array("type" => "Label", "label" => "Firmware: ".$this->ReadAttributeString("Firmware")); 
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arrayElements[] = array("type" => "Label", "label" => "Test Center"); 
 		$arrayElements[] = array("type" => "TestCenter", "name" => "TestCenter");
