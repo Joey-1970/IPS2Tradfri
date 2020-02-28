@@ -173,6 +173,17 @@
 					SetValueInteger($this->GetIDForIdent("Ambiente"), $AmmbienteArray[$DeviceStateArray[5706]]);
 				}
 			}
+			
+			$ColorArray = array("4a418a" => 0, "6c83ba" => 1, "8f2686" => 2, "a9d62b" => 3, "c984bb" => 4, "d6e44b" => 5, 
+						"d9337c" => 6, "da5d41" => 7, "dc4b31" => 8, "dcf0f8" => 9, "e491af" => 10, "e57345" => 11, 
+						"e78834" => 12, "e8bedd" => 13, "eaf6fb" => 14, "ebb63e" => 15, "efd275" => 16, 
+						"f1e0b5" => 17, "f2eccf" => 18, "f5faf6" => 19);
+			if (array_key_exists($ColorArray[$DeviceStateArray[5706]], $ColorArray)) {
+				If (GetValueInteger($this->GetIDForIdent("Color")) <> $ColorArray[$DeviceStateArray[5706]]) {
+					SetValueInteger($this->GetIDForIdent("Color"), $ColorArray[$DeviceStateArray[5706]]);
+				}
+			}
+			
 			If (GetValueInteger($this->GetIDForIdent("Color")) <> hexdec($DeviceStateArray[5706])) {
 				SetValueInteger($this->GetIDForIdent("Color"), hexdec($DeviceStateArray[5706]));
 			}
