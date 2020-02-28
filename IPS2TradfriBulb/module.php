@@ -40,6 +40,8 @@
 		
 		$this->RegisterVariableInteger("Color", "Farbe", "~HexColor", 40);
            	$this->EnableAction("Color");
+		
+		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Switch", 60);
         }
  	
 	public function GetConfigurationForm() 
@@ -125,6 +127,10 @@
 			$this->SendDebug("GetState", "Ergebnis: ".$Result, 0);
 			$DeviceStateArray = array();
 			$DeviceStateArray = unserialize($Result);
+			
+			If (GetValueBoolean($this->GetIDForIdent("Available")) <> $DeviceStateArray[9019]) {
+				SetValueBoolean($this->GetIDForIdent("Available"), $DeviceStateArray[9019]);
+			}	
 
 			If (GetValueBoolean($this->GetIDForIdent("State")) <> $DeviceStateArray[5850]) {
 				SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
