@@ -167,10 +167,12 @@
 			If (GetValueInteger($this->GetIDForIdent("Intensity")) <> $DeviceStateArray[5851]) {
 				SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
 			}
+			
+			$ColorValue = $DeviceStateArray[5706];
 			$AmmbienteArray = array("f1e0b5" => 0, "f5faf6" => 1, "efd275" => 2);
-			if (array_key_exists($AmmbienteArray[$DeviceStateArray[5706]], $AmmbienteArray)) {
-				If (GetValueInteger($this->GetIDForIdent("Ambiente")) <> $AmmbienteArray[$DeviceStateArray[5706]]) {
-					SetValueInteger($this->GetIDForIdent("Ambiente"), $AmmbienteArray[$DeviceStateArray[5706]]);
+			if (array_key_exists($ColorValue, $AmmbienteArray)) {
+				If (GetValueInteger($this->GetIDForIdent("Ambiente")) <> $AmmbienteArray[$ColorValue]) {
+					SetValueInteger($this->GetIDForIdent("Ambiente"), $AmmbienteArray[$ColorValue]);
 				}
 			}
 			
@@ -178,9 +180,9 @@
 						"d9337c" => 6, "da5d41" => 7, "dc4b31" => 8, "dcf0f8" => 9, "e491af" => 10, "e57345" => 11, 
 						"e78834" => 12, "e8bedd" => 13, "eaf6fb" => 14, "ebb63e" => 15, "efd275" => 16, 
 						"f1e0b5" => 17, "f2eccf" => 18, "f5faf6" => 19);
-			if (array_key_exists($ColorArray[$DeviceStateArray[5706]], $ColorArray)) {
-				If (GetValueInteger($this->GetIDForIdent("Color")) <> $ColorArray[$DeviceStateArray[5706]]) {
-					SetValueInteger($this->GetIDForIdent("Color"), $ColorArray[$DeviceStateArray[5706]]);
+			if (array_key_exists($ColorValue, $ColorArray)) {
+				If (GetValueInteger($this->GetIDForIdent("Color")) <> $ColorArray[$ColorValue]) {
+					SetValueInteger($this->GetIDForIdent("Color"), $ColorArray[$ColorValue]);
 				}
 			}
 			
