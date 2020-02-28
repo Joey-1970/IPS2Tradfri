@@ -186,9 +186,6 @@
 				}
 			}
 			
-			If (GetValueInteger($this->GetIDForIdent("Color")) <> hexdec($DeviceStateArray[5706])) {
-				SetValueInteger($this->GetIDForIdent("Color"), hexdec($DeviceStateArray[5706]));
-			}
 		}
 	}
 	
