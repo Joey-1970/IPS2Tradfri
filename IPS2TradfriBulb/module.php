@@ -27,7 +27,29 @@
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 0, "Alltag", "Bulb", 0xf1e0b5);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 1, "Fokus", "Bulb", 0xf5faf6);
 		IPS_SetVariableProfileAssociation("Tradfri.Ambiente", 2, "Entspannung", "Bulb", 0xefd275);
-				
+		
+		$this->RegisterProfileInteger("Tradfri.Color", "Bulb", "", "", 0, 20, 0);
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 0, "Blau", "Bulb", 0x4a418a); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 1, "Hellblau", "Bulb", 0x6c83ba); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 2, "Saturated Purple", "Bulb", 0x8f2686); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 3, "Lime", "Bulb", 0xa9d62b); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 4, "Light Purple", "Bulb", 0xc984bb); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 5, "Gelb", "Bulb", 0xd6e44b); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 6, "Saturated Pink", "Bulb", 0xd9337c); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 7, "Dark Peach", "Bulb", 0xda5d41); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 8, "Saturated Red", "Bulb", 0xdc4b31); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 9, "Cold sky", "Bulb", 0xdcf0f8); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 10, "Pink", "Bulb", 0xe491af); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 11, "Peach", "Bulb", 0xe57345); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 12, "Warm Amber", "Bulb", 0xe78834); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 13, "Light Pink", "Bulb", 0xe8bedd); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 14, "Cool daylight", "Bulb", 0xeaf6fb); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 15, "Candlelight", "Bulb", 0xebb63e); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 16, "Warm glow", "Bulb", 0xefd275); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 17, "Warm white", "Bulb", 0xf1e0b5); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 18, "Sunrise", "Bulb", 0xf2eccf); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 19, "Cool white", "Bulb", 0xf5faf6); 
+		
 		// Status-Variablen anlegen
 		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
 	        $this->EnableAction("State");
@@ -38,8 +60,11 @@
 		$this->RegisterVariableInteger("Ambiente", "Ambiente", "Tradfri.Ambiente", 30);
 	        $this->EnableAction("Ambiente");
 		
-		$this->RegisterVariableInteger("Color", "Farbe", "~HexColor", 40);
-           	$this->EnableAction("Color");
+		$this->RegisterVariableInteger("Color", "Farbe", "Tradfri.Color", 40);
+	        $this->EnableAction("Color");
+		
+		//$this->RegisterVariableInteger("RGB", "Farbe", "~HexColor", 50);
+           	//$this->EnableAction("RGB");
 		
 		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 60);
         }
