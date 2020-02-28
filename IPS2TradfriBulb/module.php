@@ -41,7 +41,7 @@
 		$this->RegisterVariableInteger("Color", "Farbe", "~HexColor", 40);
            	$this->EnableAction("Color");
 		
-		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Switch", 60);
+		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 60);
         }
  	
 	public function GetConfigurationForm() 
