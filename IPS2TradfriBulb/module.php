@@ -45,10 +45,10 @@
 		IPS_SetVariableProfileAssociation("Tradfri.Color", 13, "Light Pink", "Bulb", 0xe8bedd); 
 		IPS_SetVariableProfileAssociation("Tradfri.Color", 14, "Cool daylight", "Bulb", 0xeaf6fb); 
 		IPS_SetVariableProfileAssociation("Tradfri.Color", 15, "Candlelight", "Bulb", 0xebb63e); 
-		IPS_SetVariableProfileAssociation("Tradfri.Color", 16, "Warm glow", "Bulb", 0xefd275); 
-		IPS_SetVariableProfileAssociation("Tradfri.Color", 17, "Warm white", "Bulb", 0xf1e0b5); 
-		IPS_SetVariableProfileAssociation("Tradfri.Color", 18, "Sunrise", "Bulb", 0xf2eccf); 
-		IPS_SetVariableProfileAssociation("Tradfri.Color", 19, "Cool white", "Bulb", 0xf5faf6); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 16, "Entspannung", "Bulb", 0xefd275); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 17, "Alltag", "Bulb", 0xf1e0b5); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 18, "Sonnenaufgang", "Bulb", 0xf2eccf); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 19, "Fokus", "Bulb", 0xf5faf6); 
 		
 		// Status-Variablen anlegen
 		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
