@@ -278,6 +278,11 @@
 	public function GetPresharedKey(string $Identifier)
 	{
 		$Result = false;
+		If (strlen($Identifier) == 0) {
+			$this->SendDebug("GetPresharedKey", "Das Schlüsselwort darf nicht leer sein!", 0);
+			Echo "Das Schlüsselwort darf nicht leer sein!";
+			return $Result;
+		}
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SendDebug("GetPresharedKey", "Ausfuehrung mit Schluesselwort: ".$Identifier, 0);
 			$IP = $this->ReadPropertyString("GatewayIP");
