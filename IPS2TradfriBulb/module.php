@@ -157,17 +157,21 @@
 			$DeviceStateArray = array();
 			$DeviceStateArray = unserialize($Result);
 			
-			If (GetValueBoolean($this->GetIDForIdent("Available")) <> $DeviceStateArray[9019]) {
-				SetValueBoolean($this->GetIDForIdent("Available"), $DeviceStateArray[9019]);
-			}	
-
-			If (GetValueBoolean($this->GetIDForIdent("State")) <> $DeviceStateArray[5850]) {
-				SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
+			If (isset($DeviceStateArray[9019])) {
+				If (GetValueBoolean($this->GetIDForIdent("Available")) <> $DeviceStateArray[9019]) {
+					SetValueBoolean($this->GetIDForIdent("Available"), $DeviceStateArray[9019]);
+				}
 			}
-			If (GetValueInteger($this->GetIDForIdent("Intensity")) <> $DeviceStateArray[5851]) {
-				SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
+			If (isset($DeviceStateArray[5850])) {
+				If (GetValueBoolean($this->GetIDForIdent("State")) <> $DeviceStateArray[5850]) {
+					SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
+				}
 			}
-			
+			If (isset($DeviceStateArray[5851])) {
+				If (GetValueInteger($this->GetIDForIdent("Intensity")) <> $DeviceStateArray[5851]) {
+					SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
+				}
+			}
 			If (isset($DeviceStateArray[5706])) {
 				$ColorValue = $DeviceStateArray[5706];
 				$AmmbienteArray = array("f1e0b5" => 0, "f5faf6" => 1, "efd275" => 2);
