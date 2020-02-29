@@ -112,12 +112,14 @@
 	// Beginn der Funktionen
 	private function BulbSwitch($DeviceID, $State)
 	{
-		If ($this->ReadPropertyBoolean("Open") == true) {
+		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadAttributeString("PresharedKey");
+		$Identifier = $this->ReadAttributeString("Identifier");
+		$State = intval($State);
+		
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
 			$this->SendDebug("SwitchBulb", "Ausfuehrung: ".$DeviceID, 0);
-			$IP = $this->ReadPropertyString("GatewayIP");
-			$Key = $this->ReadAttributeString("PresharedKey");
-			$Identifier = $this->ReadAttributeString("Identifier");
-			$State = intval($State);
+			
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5850": '.$State.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
 			$Response = exec($Message." 2>&1", $Output);
 		}
@@ -125,11 +127,12 @@
 	
 	private function BulbIntensity($DeviceID, $Intensity)
 	{
-		If ($this->ReadPropertyBoolean("Open") == true) {
+		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadAttributeString("PresharedKey");
+		$Identifier = $this->ReadAttributeString("Identifier");
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
 			$this->SendDebug("BulbIntensity", "Ausfuehrung: ".$DeviceID, 0);
-			$IP = $this->ReadPropertyString("GatewayIP");
-			$Key = $this->ReadAttributeString("PresharedKey");
-			$Identifier = $this->ReadAttributeString("Identifier");
+			
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5851": '.$Intensity.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
 			$Response = exec($Message." 2>&1", $Output);
 		}
@@ -137,11 +140,12 @@
 	
 	private function BulbAmbiente($DeviceID, $Value)
 	{
-		If ($this->ReadPropertyBoolean("Open") == true) {
+		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadAttributeString("PresharedKey");
+		$Identifier = $this->ReadAttributeString("Identifier");
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
 			$this->SendDebug("BulbAmbiente", "Ausfuehrung: ".$DeviceID." - ".$Value, 0);
-			$IP = $this->ReadPropertyString("GatewayIP");
-			$Key = $this->ReadAttributeString("PresharedKey");
-			$Identifier = $this->ReadAttributeString("Identifier");
+			
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5706": "'.$Value.'" }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
 			$Response = exec($Message." 2>&1", $Output);
 			$this->SendDebug("BulbAmbiente", "Ergebnis: ".serialize($Output), 0);
@@ -150,11 +154,12 @@
 	
 	private function BulbFadetime($DeviceID, $Value)
 	{
-		If ($this->ReadPropertyBoolean("Open") == true) {
+		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadAttributeString("PresharedKey");
+		$Identifier = $this->ReadAttributeString("Identifier");
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
 			$this->SendDebug("BulbFadetime", "Ausfuehrung: ".$DeviceID, 0);
-			$IP = $this->ReadPropertyString("GatewayIP");
-			$Key = $this->ReadAttributeString("PresharedKey");
-			$Identifier = $this->ReadAttributeString("Identifier");
+			
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5712": '.$Value.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
 			$Response = exec($Message." 2>&1", $Output);
 		}
@@ -162,45 +167,48 @@
 	
 	private function DeviceState($DeviceID)
 	{
-		$this->SendDebug("DeviceState", "Ausfuehrung: ".$DeviceID, 0);
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
-		
-    		$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
-    		$Response = exec($Message." 2>&1", $Output);
-    		$ResultArray = array();
-    		If (is_array($Output)) {
-        		If (isset($Output[3])) {
-            			$data = json_decode($Output[3]);
-            			If (isset($data->{'9019'})) {
-                			$ResultArray[9019] = $data->{'9019'};
-            			}
-            			If (isset($data->{'3311'})) {
-                			$StateArray = $data->{'3311'}{'0'};
-                    			foreach ($StateArray as $Key => $State) {
-                        			$ResultArray[$Key] = $State;
-                    			}
-            			}
-            			elseif (isset($data->{'3300'})) {
-               				$StateArray = $data->{'3300'}{'0'};
-                    			foreach ($StateArray as $Key => $State) {
-                        			$ResultArray[$Key] = $State;
-                    			}
-            			}
-            			elseif (isset($data->{'3312'})) {
-                			$StateArray = $data->{'3312'}{'0'};
-                    			foreach ($StateArray as $Key => $State) {
-                        			$ResultArray[$Key] = $State;
-                    			}
-            			}
-            			elseif (isset($data->{'15015'})) {
-                			$StateArray = $data->{'15015'}{'0'};
-                    			foreach ($StateArray as $Key => $State) {
-                        			$ResultArray[$Key] = $State;
-                    			}
-            			}
-        		}
+		$ResultArray = array();
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+			$this->SendDebug("DeviceState", "Ausfuehrung: ".$DeviceID, 0);
+			
+			$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
+			$Response = exec($Message." 2>&1", $Output);
+			
+			If (is_array($Output)) {
+				If (isset($Output[3])) {
+					$data = json_decode($Output[3]);
+					If (isset($data->{'9019'})) {
+						$ResultArray[9019] = $data->{'9019'};
+					}
+					If (isset($data->{'3311'})) {
+						$StateArray = $data->{'3311'}{'0'};
+						foreach ($StateArray as $Key => $State) {
+							$ResultArray[$Key] = $State;
+						}
+					}
+					elseif (isset($data->{'3300'})) {
+						$StateArray = $data->{'3300'}{'0'};
+						foreach ($StateArray as $Key => $State) {
+							$ResultArray[$Key] = $State;
+						}
+					}
+					elseif (isset($data->{'3312'})) {
+						$StateArray = $data->{'3312'}{'0'};
+						foreach ($StateArray as $Key => $State) {
+							$ResultArray[$Key] = $State;
+						}
+					}
+					elseif (isset($data->{'15015'})) {
+						$StateArray = $data->{'15015'}{'0'};
+						foreach ($StateArray as $Key => $State) {
+							$ResultArray[$Key] = $State;
+						}
+					}
+				}
+			}
     		}
 	return $ResultArray;
 	} 
@@ -211,18 +219,20 @@
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
-		
-		$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001"';
-		$Response = exec($Message." 2>&1", $Output);
-		$DeviceArray = array();
-		If (is_array($Output)) {
-			If (isset($Output[3])) {
-				$Search = array("[", "]");
-				$Devices = str_replace($Search, "", $Output[3]);
-				$DeviceArray = explode(",", $Devices);
-				$DeviceInfoArray = array();
-				foreach ($DeviceArray as $DeviceID) {
-					$DeviceInfoArray[$DeviceID] = $this->DeviceInfo($DeviceID);
+		$DeviceInfoArray = array();
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+			$this->SendDebug("DeviceList", "Ausfuehrung", 0);
+			$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001"';
+			$Response = exec($Message." 2>&1", $Output);
+			$DeviceArray = array();
+			If (is_array($Output)) {
+				If (isset($Output[3])) {
+					$Search = array("[", "]");
+					$Devices = str_replace($Search, "", $Output[3]);
+					$DeviceArray = explode(",", $Devices);
+					foreach ($DeviceArray as $DeviceID) {
+						$DeviceInfoArray[$DeviceID] = $this->DeviceInfo($DeviceID);
+					}
 				}
 			}
 		}
