@@ -244,32 +244,36 @@
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
-		$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
-		$Response = exec($Message." 2>&1", $Output);
 		$DeviceInfo = array();
-		If (is_array($Output)) {
-			If (isset($Output[3])) {
-				$data = json_decode($Output[3]);
-				$DeviceInfo["Name"] = $data->{'9001'};
-				$DeviceInfo["Typ"] = $data->{'3'}->{'1'};
-				$DeviceInfo["Firmware"] = $data->{'3'}->{'3'};
-				If (isset($data->{'3311'})) {
-					$DeviceInfo["Class"] = "Bulb";
-				}
-				elseif (isset($data->{'3300'})) {
-					$DeviceInfo["Class"] = "MotionSensor";
-				}
-				elseif (isset($data->{'3312'})) {
-					$DeviceInfo["Class"] = "Plug";
-				}
-				elseif (isset($data->{'15009'})) {
-					$DeviceInfo["Class"] = "Remote";
-				}
-				elseif (isset($data->{'15015'})) {
-					$DeviceInfo["Class"] = "Blind";
-				}
-				else {
-					$DeviceInfo["Class"] = "Unknown";
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+			$this->SendDebug("DeviceInfo", "Ausfuehrung: ".$DeviceID, 0);
+			$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
+			$Response = exec($Message." 2>&1", $Output);
+			
+			If (is_array($Output)) {
+				If (isset($Output[3])) {
+					$data = json_decode($Output[3]);
+					$DeviceInfo["Name"] = $data->{'9001'};
+					$DeviceInfo["Typ"] = $data->{'3'}->{'1'};
+					$DeviceInfo["Firmware"] = $data->{'3'}->{'3'};
+					If (isset($data->{'3311'})) {
+						$DeviceInfo["Class"] = "Bulb";
+					}
+					elseif (isset($data->{'3300'})) {
+						$DeviceInfo["Class"] = "MotionSensor";
+					}
+					elseif (isset($data->{'3312'})) {
+						$DeviceInfo["Class"] = "Plug";
+					}
+					elseif (isset($data->{'15009'})) {
+						$DeviceInfo["Class"] = "Remote";
+					}
+					elseif (isset($data->{'15015'})) {
+						$DeviceInfo["Class"] = "Blind";
+					}
+					else {
+						$DeviceInfo["Class"] = "Unknown";
+					}
 				}
 			}
 		}
@@ -281,17 +285,20 @@
     		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
-		$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15011/15012"';
-      
-    		$Response = exec($Message." 2>&1", $Output);
-    		$GatewayInfoArray = array();
-    		If (is_array($Output)) {
-        		If (isset($Output[3])) {
-            			$data = json_decode($Output[3]);
-            			$GatewayInfoArray["Firmware"] = $data->{'9029'};
-				$this->WriteAttributeString("GatewayFirmware", $data->{'9029'});
-        		}
-    		}
+		$GatewayInfoArray = array();
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+			$this->SendDebug("GatewayInfo", "Ausfuehrung", 0);
+			$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15011/15012"';
+			$Response = exec($Message." 2>&1", $Output);
+			
+			If (is_array($Output)) {
+				If (isset($Output[3])) {
+					$data = json_decode($Output[3]);
+					$GatewayInfoArray["Firmware"] = $data->{'9029'};
+					$this->WriteAttributeString("GatewayFirmware", $data->{'9029'});
+				}
+			}
+		}
 	return $GatewayInfoArray;
 	}      
 	    
