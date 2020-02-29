@@ -303,6 +303,7 @@
         				else {
             					// Key konnte nicht generiert werden
 						$this->SendDebug("GetPresharedKey", "Key konnte nicht generiert werden!", 0);
+						Echo "Key konnte nicht generiert werden!\nMöglicherweise ist das Schlüsselwort schon einmal verwendet worden?";
             					$Result = false;
         				}
     				}
