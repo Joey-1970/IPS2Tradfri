@@ -31,9 +31,9 @@
 		$this->RegisterProfileInteger("Tradfri.Color", "Bulb", "", "", 0, 20, 0);
 		IPS_SetVariableProfileAssociation("Tradfri.Color", 0, "Blau", "Bulb", 0x4a418a); 
 		IPS_SetVariableProfileAssociation("Tradfri.Color", 1, "Helles Blau", "Bulb", 0x6c83ba); 
-		IPS_SetVariableProfileAssociation("Tradfri.Color", 2, "Saturated Purple", "Bulb", 0x8f2686); 
-		IPS_SetVariableProfileAssociation("Tradfri.Color", 3, "Lime", "Bulb", 0xa9d62b); 
-		IPS_SetVariableProfileAssociation("Tradfri.Color", 4, "Light Purple", "Bulb", 0xc984bb); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 2, "Gesättigtes Lila", "Bulb", 0x8f2686); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 3, "Limette", "Bulb", 0xa9d62b); 
+		IPS_SetVariableProfileAssociation("Tradfri.Color", 4, "Helles Lila", "Bulb", 0xc984bb); 
 		IPS_SetVariableProfileAssociation("Tradfri.Color", 5, "Gelb", "Bulb", 0xd6e44b); 
 		IPS_SetVariableProfileAssociation("Tradfri.Color", 6, "Gesättigtes Rosa", "Bulb", 0xd9337c); 
 		IPS_SetVariableProfileAssociation("Tradfri.Color", 7, "Dunkler Pfirsich", "Bulb", 0xda5d41); 
