@@ -14,6 +14,7 @@
 		
 		$this->RegisterAttributeString("PresharedKey", "");
 		$this->RegisterAttributeString("Identifier", "");
+		$this->RegisterAttributeString("GatewayFirmware", "");
         }
  	
 	public function GetConfigurationForm() 
@@ -30,6 +31,8 @@
 		$arrayElements[] = array("type" => "Label", "label" => "Tradfri-Gateway-Zugangsdaten");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "GatewayIP", "caption" => "Gateway IP");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "SecurityID", "caption" => "Security ID (auf der Unterseite des Gateway)");
+		$GatewayFirmware = "Gateway Firmware: ".($this->ReadAttributeString("GatewayFirmware"));
+		$arrayElements[] = array("type" => "Label", "label" => $GatewayFirmware);
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arrayElements[] = array("type" => "Label", "label" => "Vom Modul erzeugte Zugangsdaten");
 		$Identifier = "Schlüsselwort: ".($this->ReadAttributeString("Identifier"));
@@ -54,6 +57,7 @@
 			$Key = $this->ReadAttributeString("PresharedKey");
 			$Identifier = $this->ReadAttributeString("Identifier");
 			If ((strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+				$this->GatewayInfo();
 				$this->SetStatus(102);
 			}
 			else {
@@ -262,6 +266,25 @@
 	return $DeviceInfo;
 	}
 	
+	private function GatewayInfo()
+	{
+    		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadAttributeString("PresharedKey");
+		$Identifier = $this->ReadAttributeString("Identifier");
+		$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15011/15012"';
+      
+    		$Response = exec($Message." 2>&1", $Output);
+    		$GatewayInfoArray = array();
+    		If (is_array($Output)) {
+        		If (isset($Output[3])) {
+            			$data = json_decode($Output[3]);
+            			$GatewayInfoArray["Firmware"] = $data->{'9029'};
+				$this->WriteAttributeString("GatewayFirmware", $data->{'9029'});
+        		}
+    		}
+	return $GatewayInfoArray;
+	}      
+	    
 	private function TestPresharedKey()
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
