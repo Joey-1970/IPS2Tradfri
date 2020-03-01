@@ -284,14 +284,17 @@
 	private function BulbDeviceType(string $DeviceTypeText) 
 	{
     		$Result = 0;
-    		If ((strpos($DeviceTypeText, " bulb ")) AND (strpos($DeviceTypeText, " WS "))) {
-        		$Result = 1; // Weißtöne
+		If ((strpos($DeviceTypeText, " bulb ")) AND (strpos($DeviceTypeText, " W "))) {
+        		$Result = 1; // GU 10 Dimmbar
+    		}
+    		elseif ((strpos($DeviceTypeText, " bulb ")) AND (strpos($DeviceTypeText, " WS "))) {
+        		$Result = 2; // Weißtöne
     		}
     		elseif ((strpos($DeviceTypeText, " bulb ")) AND (strpos($DeviceTypeText, " CWS "))) {
-        		$Result = 2; // Farbe
+        		$Result = 3; // Farbe
     		}
     		elseif (strpos($DeviceTypeText, " transformer ")) {
-        		$Result = 3; // Transformator
+        		$Result = 4; // Transformator
     		}
     		else {
         		$Result = 0; // unbekannter Typ
