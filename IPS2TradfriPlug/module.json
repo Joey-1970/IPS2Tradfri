@@ -1,0 +1,14 @@
+{
+  "id": "{89756350-E4DB-F332-5B25-979C66F005D5}",
+  "name": "IPS2TradfriPlug",
+  "type": 3,
+  "vendor": "JP-IPS-Modules",
+  "aliases":
+  [
+    "IPS2TradfriPlug"
+  ],
+  "parentRequirements": ["{4AA318CB-CA9A-2467-3079-A35AD1577771}"],
+  "childRequirements": [],
+  "implemented": ["{D63AA852-D72B-258B-6AF5-689C8B62AF02}"],
+  "prefix": "IPS2TradfriPlug"
+}
