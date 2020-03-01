@@ -56,12 +56,14 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$Key = $this->ReadAttributeString("PresharedKey");
 			$Identifier = $this->ReadAttributeString("Identifier");
-			If ((strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+			$IP = $this->ReadPropertyString("GatewayIP");
+			If ((strlen($Identifier) > 0) AND (strlen($Key) == 16) AND (filter_var($IP, FILTER_VALIDATE_IP))) {
 				$this->GatewayInfo();
 				$this->SetStatus(102);
 			}
 			else {
-				$this->SendDebug("ApplyChanges", "Fehlerhafter Key!", 0);
+				Echo "Syntax der IP inkorrekt, Kein gültiger Key oder kein korrektes Schlüsselwort!";
+				$this->SendDebug("ApplyChanges", "Syntax der IP inkorrekt, Kein gültiger Key oder kein korrektes Schlüsselwort!", 0);
 				$this->SetStatus(203);
 			}
 			
