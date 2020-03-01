@@ -59,10 +59,20 @@
 	        $this->EnableAction("Intensity");
 		
 		$this->RegisterVariableInteger("Ambiente", "Ambiente", "Tradfri.Ambiente", 30);
-	        $this->EnableAction("Ambiente");
+	        If (($this->ReadPropertyInteger("DeviceSpecification") == 2) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
+			$this->EnableAction("Ambiente");
+		}
+		else {
+			$this->DisableAction("Ambiente");
+		}
 		
 		$this->RegisterVariableInteger("Color", "Farbe", "Tradfri.Color", 40);
-	        $this->EnableAction("Color");
+	        If (($this->ReadPropertyInteger("DeviceSpecification") == 3) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
+			$this->EnableAction("Color");
+		}
+		else {
+			$this->DisableAction("Color");
+		}
 		
 		//$this->RegisterVariableInteger("RGB", "Farbe", "~HexColor", 50);
            	//$this->EnableAction("RGB");
