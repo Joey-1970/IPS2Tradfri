@@ -17,6 +17,7 @@
 		$this->ConnectParent("{562389F8-739F-644A-4FC7-36F2CE3AFE4F}");
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("DeviceID", 0);
+		$this->RegisterPropertyInteger("DeviceSpecification", 0);
 		$this->RegisterTimer("Timer_1", 0, 'IPS2TradfriBulb_GetState($_IPS["TARGET"]);');
 		
 		$this->RegisterAttributeString("Name", "");
