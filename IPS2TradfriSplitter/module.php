@@ -108,7 +108,7 @@
 				$this->BulbFadetime($data->DeviceID, $data->Value);
 				break;
 			case "PlugSwitch":
-				//$this->PlugSwitch($data->DeviceID, $data->State);
+				$this->PlugSwitch($data->DeviceID, $data->State);
 				break;
 		}
 	return $Result;
@@ -170,6 +170,21 @@
 		}
 	}        
 	
+	private function PlugSwitch($DeviceID, $State)
+	{
+		$IP = $this->ReadPropertyString("GatewayIP");
+		$Key = $this->ReadAttributeString("PresharedKey");
+		$Identifier = $this->ReadAttributeString("Identifier");
+		$State = intval($State);
+		
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+			$this->SendDebug("PlugSwitch", "Ausfuehrung: ".$DeviceID, 0);
+			
+			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5850": '.$State.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
+			$Response = exec($Message." 2>&1", $Output);
+		}
+	}    
+	    
 	private function DeviceState($DeviceID)
 	{
 		$IP = $this->ReadPropertyString("GatewayIP");
