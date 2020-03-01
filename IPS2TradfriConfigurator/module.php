@@ -56,7 +56,11 @@
 			If (($DeviceArray[$i]["DeviceID"] >= 65537) AND ($DeviceArray[$i]["Class"] <> "Unknown")) {
 				If ($DeviceArray[$i]["Class"] == "Bulb") {
 					$arrayCreate[] = array("moduleID" => "{3B0E081A-A63E-7496-E304-A34C00790516}", 
-					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Open" => true, "DeviceSpecification" => $DeviceArray[$i]["Specification"]) );
+					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Open" => true, "DeviceSpecification" => $DeviceArray[$i]["Specification"]));
+				}
+				elseIf ($DeviceArray[$i]["Class"] == "Plug") {
+					$arrayCreate[] = array("moduleID" => "{89756350-E4DB-F332-5B25-979C66F005D5}", 
+					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Open" => true);
 				}
 				$arrayValues[] = array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Name" => $DeviceArray[$i]["Name"], "Firmware" => $DeviceArray[$i]["Firmware"], "Class" => $DeviceArray[$i]["Class"], "Typ" => $DeviceArray[$i]["Typ"],
 					       "instanceID" => $DeviceArray[$i]["Instance"], "create" => $arrayCreate);
@@ -122,6 +126,9 @@
 	{
 		If ($Class == "Bulb") {
 			$guid = "{3B0E081A-A63E-7496-E304-A34C00790516}";
+		}
+		elseIf ($Class == "Plug") {
+			$guid = "{89756350-E4DB-F332-5B25-979C66F005D5}";
 		}
 	    	$Result = 0;
 	    	// Modulinstanzen suchen
