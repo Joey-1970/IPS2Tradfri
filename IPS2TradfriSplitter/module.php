@@ -258,6 +258,7 @@
 					$DeviceInfo["Firmware"] = $data->{'3'}->{'3'};
 					If (isset($data->{'3311'})) {
 						$DeviceInfo["Class"] = "Bulb";
+						$DeviceInfo["Specification"] = $this->BulbDeviceType($data->{'3'}->{'1'});
 					}
 					elseif (isset($data->{'3300'})) {
 						$DeviceInfo["Class"] = "MotionSensor";
@@ -280,6 +281,24 @@
 	return $DeviceInfo;
 	}
 	
+	private function BulbDeviceType(string $DeviceTypeText) 
+	{
+    		$Result = 0;
+    		If ((strpos($DeviceTypeText, " bulb ")) AND (strpos($DeviceTypeText, " WS "))) {
+        		$Result = 1; // Weißtöne
+    		}
+    		elseif ((strpos($DeviceTypeText, " bulb ")) AND (strpos($DeviceTypeText, " CWS "))) {
+        		$Result = 2; // Farbe
+    		}
+    		elseif (strpos($DeviceTypeText, " transformer ")) {
+        		$Result = 3; // Transformator
+    		}
+    		else {
+        		$Result = 0; // unbekannter Typ
+    		}
+	return $Result;
+	}    
+	    
 	private function GatewayInfo()
 	{
     		$IP = $this->ReadPropertyString("GatewayIP");
@@ -351,6 +370,7 @@
 		}
 	return $Result;
 	}     
-
+	
+	 
 }
 ?>
