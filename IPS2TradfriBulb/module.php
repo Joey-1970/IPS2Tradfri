@@ -59,21 +59,9 @@
 	        $this->EnableAction("Intensity");
 		
 		$this->RegisterVariableInteger("Ambiente", "Ambiente", "Tradfri.Ambiente", 30);
-	        If (($this->ReadPropertyInteger("DeviceSpecification") == 2) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
-			$this->EnableAction("Ambiente");
-		}
-		else {
-			$this->DisableAction("Ambiente");
-		}
 		
 		$this->RegisterVariableInteger("Color", "Farbe", "Tradfri.Color", 40);
-	        If (($this->ReadPropertyInteger("DeviceSpecification") == 3) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
-			$this->EnableAction("Color");
-		}
-		else {
-			$this->DisableAction("Color");
-		}
-		
+	       
 		//$this->RegisterVariableInteger("RGB", "Farbe", "~HexColor", 50);
            	//$this->EnableAction("RGB");
 		
@@ -109,6 +97,19 @@
             	parent::ApplyChanges();
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
+			 If (($this->ReadPropertyInteger("DeviceSpecification") == 2) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
+				$this->EnableAction("Ambiente");
+			}
+			else {
+				$this->DisableAction("Ambiente");
+			}
+			 If (($this->ReadPropertyInteger("DeviceSpecification") == 3) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
+				$this->EnableAction("Color");
+			}
+			else {
+				$this->DisableAction("Color");
+			}
+			
 			$this->SetStatus(102);
 			$this->GetDeviceInfo();
 			$this->GetState();
