@@ -99,15 +99,19 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			 If (($this->ReadPropertyInteger("DeviceSpecification") == 2) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
 				$this->EnableAction("Ambiente");
+				IPS_SetHidden($this->GetIDForIdent("Ambiente"), false); 
 			}
 			else {
 				$this->DisableAction("Ambiente");
+				IPS_SetHidden($this->GetIDForIdent("Ambiente"), true); 
 			}
 			 If (($this->ReadPropertyInteger("DeviceSpecification") == 3) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
 				$this->EnableAction("Color");
+				IPS_SetHidden($this->GetIDForIdent("Color"), false); 
 			}
 			else {
 				$this->DisableAction("Color");
+				IPS_SetHidden($this->GetIDForIdent("Color"), true); 
 			}
 			
 			$this->SetStatus(102);
