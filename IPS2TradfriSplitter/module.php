@@ -107,6 +107,9 @@
 			case "BulbFadetime":
 				$this->BulbFadetime($data->DeviceID, $data->Value);
 				break;
+			case "PlugSwitch":
+				//$this->PlugSwitch($data->DeviceID, $data->State);
+				break;
 		}
 	return $Result;
 	}
