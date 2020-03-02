@@ -17,15 +17,15 @@
 		$this->ConnectParent("{562389F8-739F-644A-4FC7-36F2CE3AFE4F}");
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("DeviceID", 0);
-		$this->RegisterTimer("Timer_1", 0, 'IPS2TradfriPlug_GetState($_IPS["TARGET"]);');
+		$this->RegisterTimer("Timer_1", 0, 'IPS2TradfriBlind_GetState($_IPS["TARGET"]);');
 		
 		$this->RegisterAttributeString("Name", "");
 		$this->RegisterAttributeString("Typ", "");
 		$this->RegisterAttributeString("Firmware", "");
 		
 		// Status-Variablen anlegen
-		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
-	        $this->EnableAction("State");
+		//$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
+	        //$this->EnableAction("State");
 		
 		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 20);
         }
@@ -76,8 +76,8 @@
 	{
   		switch($Ident) {
 	        case "State":
-	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "PlugSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
+	            	//$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+			//	"Function" => "PlugSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
 	            	SetValueBoolean($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
@@ -95,7 +95,7 @@
 			$this->SendDebug("GetState", "Ergebnis: ".$Result, 0);
 			$DeviceStateArray = array();
 			$DeviceStateArray = unserialize($Result);
-			
+			/*
 			If (isset($DeviceStateArray[9019])) {
 				If (GetValueBoolean($this->GetIDForIdent("Available")) <> $DeviceStateArray[9019]) {
 					SetValueBoolean($this->GetIDForIdent("Available"), $DeviceStateArray[9019]);
@@ -106,6 +106,7 @@
 					SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
 				}
 			}
+			*/
 		}
 	}
 	
