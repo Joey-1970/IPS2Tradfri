@@ -61,7 +61,7 @@
             	parent::ApplyChanges();
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			If ($this->ReadPropertyInteger("DeviceID") < 65537) {
+			If ($this->ReadPropertyInteger("DeviceID") >= 65537) {
 				$this->SetStatus(102);
 				$this->GetDeviceInfo();
 				$this->GetState();
