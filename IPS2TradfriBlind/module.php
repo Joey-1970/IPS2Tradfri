@@ -23,11 +23,14 @@
 		$this->RegisterAttributeString("Typ", "");
 		$this->RegisterAttributeString("Firmware", "");
 		
-		// Status-Variablen anlegen
-		//$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
-	        //$this->EnableAction("State");
+		//Status-Variablen anlegen
+		$this->RegisterVariableInteger("Move", "Status", "~ShutterMoveStop", 10);
+		$this->EnableAction("Move");
 		
-		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 20);
+		$this->RegisterVariableInteger("State", "Status", "", 20);
+		$this->EnableAction("State");
+		
+		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 30);
         }
  	
 	public function GetConfigurationForm() 
