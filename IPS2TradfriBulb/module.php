@@ -119,6 +119,7 @@
 				$this->GetDeviceInfo();
 				$this->GetState();
 				$this->SetTimerInterval("Timer_1", 1000);
+			}
 			else {
 				Echo "Syntax der Device ID inkorrekt!";
 				$this->SendDebug("ApplyChanges", "Syntax der Device ID inkorrekt!", 0);
