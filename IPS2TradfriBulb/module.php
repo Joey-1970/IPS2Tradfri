@@ -97,27 +97,33 @@
             	parent::ApplyChanges();
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			 If (($this->ReadPropertyInteger("DeviceSpecification") == 2) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
-				$this->EnableAction("Ambiente");
-				IPS_SetHidden($this->GetIDForIdent("Ambiente"), false); 
-			}
+			If ($this->ReadPropertyInteger("DeviceID") >= 65537) {
+				If (($this->ReadPropertyInteger("DeviceSpecification") == 2) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
+					$this->EnableAction("Ambiente");
+					IPS_SetHidden($this->GetIDForIdent("Ambiente"), false); 
+				}
+				else {
+					$this->DisableAction("Ambiente");
+					IPS_SetHidden($this->GetIDForIdent("Ambiente"), true); 
+				}
+				 If (($this->ReadPropertyInteger("DeviceSpecification") == 3) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
+					$this->EnableAction("Color");
+					IPS_SetHidden($this->GetIDForIdent("Color"), false); 
+				}
+				else {
+					$this->DisableAction("Color");
+					IPS_SetHidden($this->GetIDForIdent("Color"), true); 
+				}
+
+				$this->SetStatus(102);
+				$this->GetDeviceInfo();
+				$this->GetState();
+				$this->SetTimerInterval("Timer_1", 1000);
 			else {
-				$this->DisableAction("Ambiente");
-				IPS_SetHidden($this->GetIDForIdent("Ambiente"), true); 
+				Echo "Syntax der Device ID inkorrekt!";
+				$this->SendDebug("ApplyChanges", "Syntax der Device ID inkorrekt!", 0);
+				$this->SetStatus(203);
 			}
-			 If (($this->ReadPropertyInteger("DeviceSpecification") == 3) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
-				$this->EnableAction("Color");
-				IPS_SetHidden($this->GetIDForIdent("Color"), false); 
-			}
-			else {
-				$this->DisableAction("Color");
-				IPS_SetHidden($this->GetIDForIdent("Color"), true); 
-			}
-			
-			$this->SetStatus(102);
-			$this->GetDeviceInfo();
-			$this->GetState();
-			$this->SetTimerInterval("Timer_1", 1000);
 		}
 		else {
 			$this->SetStatus(104);
