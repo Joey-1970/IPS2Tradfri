@@ -60,7 +60,7 @@
 				}
 				elseIf ($DeviceArray[$i]["Class"] == "Plug") {
 					$arrayCreate[] = array("moduleID" => "{89756350-E4DB-F332-5B25-979C66F005D5}", 
-					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Open" => true);
+					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Open" => true));
 				}
 				$arrayValues[] = array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Name" => $DeviceArray[$i]["Name"], "Firmware" => $DeviceArray[$i]["Firmware"], "Class" => $DeviceArray[$i]["Class"], "Typ" => $DeviceArray[$i]["Typ"],
 					       "instanceID" => $DeviceArray[$i]["Instance"], "create" => $arrayCreate);
