@@ -1,0 +1,14 @@
+{
+  "id": "{D905AD59-7A30-FDB0-B1C2-FFFE2E2E24F6}",
+  "name": "IPS2TradfriBlind",
+  "type": 3,
+  "vendor": "JP-IPS-Modules",
+  "aliases":
+  [
+    "IPS2TradfriBlind"
+  ],
+  "parentRequirements": ["{4AA318CB-CA9A-2467-3079-A35AD1577771}"],
+  "childRequirements": [],
+  "implemented": ["{D63AA852-D72B-258B-6AF5-689C8B62AF02}"],
+  "prefix": "IPS2TradfriBlind"
+}
