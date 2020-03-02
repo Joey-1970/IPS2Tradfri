@@ -64,10 +64,17 @@
             	parent::ApplyChanges();
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			$this->SetStatus(102);
-			$this->GetDeviceInfo();
-			$this->GetState();
-			$this->SetTimerInterval("Timer_1", 1000);
+			If ($this->ReadPropertyInteger("DeviceID") >= 65537) {
+				$this->SetStatus(102);
+				$this->GetDeviceInfo();
+				$this->GetState();
+				$this->SetTimerInterval("Timer_1", 1000);
+			}
+			else {
+				Echo "Syntax der Device ID inkorrekt!";
+				$this->SendDebug("ApplyChanges", "Syntax der Device ID inkorrekt!", 0);
+				$this->SetStatus(203);
+			}
 		}
 		else {
 			$this->SetStatus(104);
