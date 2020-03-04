@@ -38,9 +38,7 @@
 		$arrayStatus[] = array("code" => 104, "icon" => "inactive", "caption" => "Instanz ist inaktiv");
 		$arrayStatus[] = array("code" => 202, "icon" => "error", "caption" => "Kommunikationfehler!");
 				
-		$arrayElements = array(); 
-		$arrayElements[] = array("type" => "Label", "label" => "UNGETESTET!!"); 
-		
+		$arrayElements = array(); 		
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "DeviceID", "caption" => "Device ID");
 		
