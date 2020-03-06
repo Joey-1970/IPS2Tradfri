@@ -63,7 +63,6 @@
 		$this->RegisterVariableInteger("Color", "Farbe", "Tradfri.Color", 40);
 	       
 		$this->RegisterVariableInteger("RGB", "Farbe", "~HexColor", 50);
-           	$this->EnableAction("RGB");
 		
 		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 60);
         }
@@ -109,10 +108,14 @@
 				 If (($this->ReadPropertyInteger("DeviceSpecification") == 3) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
 					$this->EnableAction("Color");
 					IPS_SetHidden($this->GetIDForIdent("Color"), false); 
+					$this->EnableAction("RGB");
+					IPS_SetHidden($this->GetIDForIdent("RGB"), false); 
 				}
 				else {
 					$this->DisableAction("Color");
 					IPS_SetHidden($this->GetIDForIdent("Color"), true); 
+					$this->DisableAction("RGB");
+					IPS_SetHidden($this->GetIDForIdent("RGB"), true); 
 				}
 
 				$this->SetStatus(102);
