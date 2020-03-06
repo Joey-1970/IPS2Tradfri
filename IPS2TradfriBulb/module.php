@@ -169,7 +169,7 @@
 	            	// Wert von RGB in xyY wandeln
 			$xyYValue = $this->HexToCIE(dechex($Value));
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbRGB", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $xyYValue )));
+				"Function" => "BulbRGB", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "ValueX" => $xyYValue[0], "ValueY" => $xyYValue[1] )));
 	            	SetValueBoolean($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
@@ -254,10 +254,10 @@
 		$Y = $red * 0.283881 + $green * 0.668433 + $blue * 0.047685;
 		$Z = $red * 0.000088 + $green * 0.072310 + $blue * 0.986039;
 		//echo( 'X: ' . $X . ' Y: ' . $Y . ' Z: ' . $Z);
-
+		
 		$CIE['x'] = round(($X / ($X + $Y + $Z)), 4);
 		$CIE['y'] = round(($Y / ($X + $Y + $Z)), 4);
-
+		$this->SendDebug("HexToCIE", "Ergebnis X: ".$CIE['x']." Ergebnis y: ".$CIE['y']. , 0);
         return $CIE;
     	}
 
