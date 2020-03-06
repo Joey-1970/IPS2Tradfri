@@ -167,10 +167,10 @@
 		break;
 		 case "RGB":
 	            	// Wert von RGB in xyY wandeln
-			$CIE = $this->HexToCIE(dechex($Value));
+			$CIE = $this->HexToCIE($Value);
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "BulbRGB", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "ValueX" => $CIE['x'], "ValueY" => $CIE['y'] )));
-	            	SetValueBoolean($this->GetIDForIdent($Ident), $Value);
+	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
 	        default:
@@ -240,7 +240,7 @@
 		}
 	}    
 	 
-	private function HexToCIE(string $Hex)
+	private function HexToCIE($Hex)
     	{
         	$red = (($Hex >> 16) & 0xFF);
 		$green = (($Hex >> 8) & 0xFF);
