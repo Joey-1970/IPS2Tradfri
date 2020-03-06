@@ -105,7 +105,7 @@
 				$this->BulbAmbiente($data->DeviceID, $data->Value);
 				break;
 			case "BulbRGB":
-				$this->BulbRGB($data->DeviceID, $data->Value);
+				$this->BulbRGB($data->DeviceID, $data->ValueX, $data->ValueY);
 				break;
 			case "BulbFadetime":
 				$this->BulbFadetime($data->DeviceID, $data->Value);
@@ -160,7 +160,7 @@
 		}
 	}        
 	
-	private function BulbRGB($DeviceID, $Value)
+	private function BulbRGB($DeviceID, $x, $y)
 	{
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
@@ -168,8 +168,8 @@
 		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
 			$this->SendDebug("BulbRGB", "Ausfuehrung: ".$DeviceID." - ".$Value, 0);
 			
-			//$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5706": "'.$Value.'" }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
-			//$Response = exec($Message." 2>&1", $Output);
+			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": ["5709": '.$x.', "5710": '.$y.']}\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
+			$Response = exec($Message." 2>&1", $Output);
 			$this->SendDebug("BulbAmbiente", "Ergebnis: ".serialize($Output), 0);
 		}
 	}         
