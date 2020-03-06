@@ -172,7 +172,7 @@
 	            	// Wert von RGB in xyY wandeln
 			$CIE = $this->HexToCIE($Value);
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbRGB", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "ValueX" => $CIE['x'], "ValueY" => $CIE['y'] )));
+				"Function" => "BulbRGB", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "ValueX" => intval($CIE['x'] * 1000), "ValueY" => intval($CIE['y'] * 1000) )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
@@ -223,6 +223,15 @@
 					If (GetValueInteger($this->GetIDForIdent("Color")) <> $ColorArray[$ColorValue]) {
 						SetValueInteger($this->GetIDForIdent("Color"), $ColorArray[$ColorValue]);
 					}
+				}
+			}
+			If ((isset($DeviceStateArray[5709])) AND (isset($DeviceStateArray[5710]))) {
+				$ValueX = $DeviceStateArray[5709] / 1000;
+				$ValueY = $DeviceStateArray[5710] / 1000;
+				// Umwandlung von CIE zu RGB
+				$ValueRGB = $this->CIEToHex($ValueX, $ValueY);
+				If (GetValueInteger($this->GetIDForIdent("RGB")) <> $ValueRGB) {
+					SetValueInteger($this->GetIDForIdent("RGB"), $ValueRGB);
 				}
 			}
 		}
