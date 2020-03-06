@@ -62,8 +62,8 @@
 		
 		$this->RegisterVariableInteger("Color", "Farbe", "Tradfri.Color", 40);
 	       
-		//$this->RegisterVariableInteger("RGB", "Farbe", "~HexColor", 50);
-           	//$this->EnableAction("RGB");
+		$this->RegisterVariableInteger("RGB", "Farbe", "~HexColor", 50);
+           	$this->EnableAction("RGB");
 		
 		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 60);
         }
@@ -142,7 +142,7 @@
 			$this->GetState();
 		break;
 	        case "Intensity":
-	            	$Value = min(254, max(1, $Value));
+	            	$Value = min(254, max(0, $Value));
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
@@ -163,6 +163,14 @@
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $ColorArray[$Value] )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
+			$this->GetState();
+		break;
+		 case "RGB":
+	            	// Wert von RGB in xyY wandeln
+			$xyYValue = $this->HexToCIE(dechex($Value));
+			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+				"Function" => "BulbRGB", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $xyYValue )));
+	            	SetValueBoolean($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
 	        default:
