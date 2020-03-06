@@ -242,7 +242,8 @@
 	 
 	private function HexToCIE($Hex)
     	{
-        	$red = (($Hex >> 16) & 0xFF);
+        	$this->SendDebug("HexToCIE", "Wert: ".$Hex, 0);
+		$red = (($Hex >> 16) & 0xFF);
 		$green = (($Hex >> 8) & 0xFF);
 		$blue = (($Hex >> 0) & 0xFF);	
         
