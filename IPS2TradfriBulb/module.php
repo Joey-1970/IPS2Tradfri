@@ -62,7 +62,7 @@
 		
 		$this->RegisterVariableInteger("Color", "Farbe", "Tradfri.Color", 40);
 	       
-		$this->RegisterVariableInteger("RGB", "Farbe", "~HexColor", 50);
+		//$this->RegisterVariableInteger("RGB", "Farbe", "~HexColor", 50);
 		
 		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 60);
         }
@@ -108,14 +108,14 @@
 				 If (($this->ReadPropertyInteger("DeviceSpecification") == 3) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
 					$this->EnableAction("Color");
 					IPS_SetHidden($this->GetIDForIdent("Color"), false); 
-					$this->EnableAction("RGB");
-					IPS_SetHidden($this->GetIDForIdent("RGB"), false); 
+					//$this->EnableAction("RGB");
+					//IPS_SetHidden($this->GetIDForIdent("RGB"), false); 
 				}
 				else {
 					$this->DisableAction("Color");
 					IPS_SetHidden($this->GetIDForIdent("Color"), true); 
-					$this->DisableAction("RGB");
-					IPS_SetHidden($this->GetIDForIdent("RGB"), true); 
+					//$this->DisableAction("RGB");
+					//IPS_SetHidden($this->GetIDForIdent("RGB"), true); 
 				}
 
 				$this->SetStatus(102);
@@ -168,7 +168,8 @@
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
-		 case "RGB":
+		/*
+		case "RGB":
 	            	// Wert von RGB in xyY wandeln
 			$CIE = $this->HexToCIE($Value);
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
@@ -176,6 +177,7 @@
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
+		*/
 	        default:
 	            throw new Exception("Invalid Ident");
 	    }
@@ -225,6 +227,7 @@
 					}
 				}
 			}
+			/*
 			If ((isset($DeviceStateArray[5709])) AND (isset($DeviceStateArray[5710]))) {
 				$ValueX = $DeviceStateArray[5709] / 1000;
 				$ValueY = $DeviceStateArray[5710] / 1000;
@@ -234,6 +237,7 @@
 					SetValueInteger($this->GetIDForIdent("RGB"), $ValueRGB);
 				}
 			}
+			*/
 		}
 	}
 	
