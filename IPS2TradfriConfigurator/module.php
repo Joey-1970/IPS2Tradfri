@@ -45,7 +45,7 @@
 			}
 		$RootNames = array_reverse($RootNames);
 		
-		$StationArray = array();
+		$DeviceArray = array();
 		If ($this->HasActiveParent() == true) {
 			$DeviceArray = unserialize($this->GetData());
 		}
