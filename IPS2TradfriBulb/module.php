@@ -145,14 +145,14 @@
   		switch($Ident) {
 	        case "State":
 	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value, "Fadetime" => $this->ReadPropertyInteger("Fadetime") )));
+				"Function" => "BulbSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value, "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
 	            	SetValueBoolean($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
 	        case "Intensity":
 	            	$Value = min(254, max(0, $Value));
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value, "Fadetime" => $this->ReadPropertyInteger("Fadetime") )));
+				"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value, "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 	        break;
