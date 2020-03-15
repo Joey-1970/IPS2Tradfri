@@ -162,7 +162,7 @@
 		case "Ambiente":
 			$AmmbienteArray = array(0 => "f1e0b5", 1 => "f5faf6", 2 => "efd275");
 	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $AmmbienteArray[$Value] )));
+				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $AmmbienteArray[$Value], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
@@ -172,7 +172,7 @@
 					    10 => "e491af", 11 => "e57345", 12 => "e78834", 13 => "e8bedd", 14 => "eaf6fb", 
 					    15 => "ebb63e", 16 => "efd275", 17 => "f1e0b5", 18 => "f2eccf", 19 => "f5faf6");
 			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $ColorArray[$Value] )));
+				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $ColorArray[$Value], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
