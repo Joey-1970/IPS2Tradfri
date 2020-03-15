@@ -96,7 +96,7 @@
 				$Result = serialize($DeviceInfoArray);
 				break;
 			case "BulbSwitch":
-				$this->BulbSwitch($data->DeviceID, $data->State);
+				$this->BulbSwitch($data->DeviceID, $data->State, $data->Fadetime);
 				break;
 			case "BulbIntensity":
 				$this->BulbIntensity($data->DeviceID, $data->Intensity);
@@ -107,9 +107,6 @@
 			case "BulbRGB":
 				$this->BulbRGB($data->DeviceID, $data->ValueX, $data->ValueY);
 				break;
-			case "BulbFadetime":
-				$this->BulbFadetime($data->DeviceID, $data->Value);
-				break;
 			case "PlugSwitch":
 				$this->PlugSwitch($data->DeviceID, $data->State);
 				break;
@@ -118,7 +115,7 @@
 	}
 	    
 	// Beginn der Funktionen
-	private function BulbSwitch($DeviceID, $State)
+	private function BulbSwitch(int $DeviceID, int $State, int $Fadetime)
 	{
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
@@ -127,8 +124,8 @@
 		
 		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
 			$this->SendDebug("SwitchBulb", "Ausfuehrung: ".$DeviceID, 0);
-			
-			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5850": '.$State.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
+			// '{ "3311": [{ "5851": 127, "5712": 10 }] }'
+			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5850": '.$State.', "5712": '.$Fadetime.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
 			$Response = exec($Message." 2>&1", $Output);
 		}
 	}
