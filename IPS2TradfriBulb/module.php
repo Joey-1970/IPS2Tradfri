@@ -61,6 +61,7 @@
 	        $this->EnableAction("Intensity");
 		
 		$this->RegisterVariableInteger("Fadetime", "Fadezeit", "Tradfri.Fadetime", 40);
+		$this->EnableAction("Fadetime");
 		
 		$this->RegisterVariableInteger("Ambiente", "Ambiente", "Tradfri.Ambiente", 50);
 		
