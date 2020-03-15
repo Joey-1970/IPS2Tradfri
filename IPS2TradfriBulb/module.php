@@ -51,20 +51,24 @@
 		IPS_SetVariableProfileAssociation("Tradfri.Color", 18, "Sonnenaufgang", "Bulb", 0xf2eccf); 
 		IPS_SetVariableProfileAssociation("Tradfri.Color", 19, "Fokus", "Bulb", 0xf5faf6); 
 		
+		$this->RegisterProfileInteger("Tradfri.Fadetime", "Clock", "", "", 0, 10, 0);
+		
 		// Status-Variablen anlegen
 		$this->RegisterVariableBoolean("State", "Status", "~Switch", 10);
 	        $this->EnableAction("State");
 		
-	        $this->RegisterVariableInteger("Intensity", "Intensity", "~Intensity.255", 20);
+	        $this->RegisterVariableInteger("Intensity", "Intensität", "~Intensity.255", 20);
 	        $this->EnableAction("Intensity");
 		
-		$this->RegisterVariableInteger("Ambiente", "Ambiente", "Tradfri.Ambiente", 30);
+		$this->RegisterVariableInteger("Fadetime", "Fadezeit", "Tradfri.Fadetime", 40);
 		
-		$this->RegisterVariableInteger("Color", "Farbe", "Tradfri.Color", 40);
+		$this->RegisterVariableInteger("Ambiente", "Ambiente", "Tradfri.Ambiente", 50);
+		
+		$this->RegisterVariableInteger("Color", "Farbe", "Tradfri.Color", 60);
 	       
-		//$this->RegisterVariableInteger("RGB", "Farbe", "~HexColor", 50);
+		//$this->RegisterVariableInteger("RGB", "Farbe", "~HexColor", 70);
 		
-		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 60);
+		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 80);
         }
  	
 	public function GetConfigurationForm() 
@@ -150,7 +154,10 @@
 				"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value )));
 	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
-	            break;
+	        break;
+		case "Fadetime":
+	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
+		break;
 		case "Ambiente":
 			$AmmbienteArray = array(0 => "f1e0b5", 1 => "f5faf6", 2 => "efd275");
 	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
