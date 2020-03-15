@@ -99,7 +99,7 @@
 				$this->BulbSwitch($data->DeviceID, $data->State, $data->Fadetime);
 				break;
 			case "BulbIntensity":
-				$this->BulbIntensity($data->DeviceID, $data->Intensity);
+				$this->BulbIntensity($data->DeviceID, $data->Intensity, $data->Fadetime);
 				break;
 			case "BulbAmbiente":
 				$this->BulbAmbiente($data->DeviceID, $data->Value);
@@ -130,7 +130,7 @@
 		}
 	}
 	
-	private function BulbIntensity($DeviceID, $Intensity)
+	private function BulbIntensity(int $DeviceID, int $Intensity, int $Fadetime)
 	{
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
@@ -138,7 +138,7 @@
 		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
 			$this->SendDebug("BulbIntensity", "Ausfuehrung: ".$DeviceID, 0);
 			
-			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5851": '.$Intensity.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
+			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5851": '.$Intensity.', "5712": '.$Fadetime.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
 			$Response = exec($Message." 2>&1", $Output);
 		}
 	}    
