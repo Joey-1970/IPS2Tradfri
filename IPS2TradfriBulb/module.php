@@ -216,6 +216,11 @@
 					SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
 				}
 			}
+			If (isset($DeviceStateArray[5712])) {
+				If (GetValueInteger($this->GetIDForIdent("Fadetime")) <> $DeviceStateArray[5712]) {
+					SetValueInteger($this->GetIDForIdent("Fadetime"), $DeviceStateArray[5712]);
+				}
+			}
 			If (isset($DeviceStateArray[5706])) {
 				$ColorValue = $DeviceStateArray[5706];
 				$AmmbienteArray = array("f1e0b5" => 0, "f5faf6" => 1, "efd275" => 2);
