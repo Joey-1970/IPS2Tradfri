@@ -142,53 +142,55 @@
 	
 	public function RequestAction($Ident, $Value) 
 	{
-  		switch($Ident) {
-	        case "State":
-	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value, "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
-	            	SetValueBoolean($this->GetIDForIdent($Ident), $Value);
-			$this->GetState();
-		break;
-	        case "Intensity":
-	            	$Value = min(254, max(0, $Value));
-			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value, "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
-	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
-			$this->GetState();
-	        break;
-		case "Fadetime":
-	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
-		break;
-		case "Ambiente":
-			$AmmbienteArray = array(0 => "f1e0b5", 1 => "f5faf6", 2 => "efd275");
-	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $AmmbienteArray[$Value], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
-	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
-			$this->GetState();
-		break;
-		case "Color":
-	            	$ColorArray = array(0 => "4a418a", 1 => "6c83ba", 2 => "8f2686", 3 => "a9d62b", 4 => "c984bb", 
-					    5 => "d6e44b", 6 => "d9337c", 7 => "da5d41", 8 => "dc4b31", 9 => "dcf0f8", 
-					    10 => "e491af", 11 => "e57345", 12 => "e78834", 13 => "e8bedd", 14 => "eaf6fb", 
-					    15 => "ebb63e", 16 => "efd275", 17 => "f1e0b5", 18 => "f2eccf", 19 => "f5faf6");
-			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $ColorArray[$Value], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
-	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
-			$this->GetState();
-		break;
-		/*
-		case "RGB":
-	            	// Wert von RGB in xyY wandeln
-			$CIE = $this->HexToCIE($Value);
-			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "BulbRGB", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "ValueX" => intval($CIE['x'] * 1000), "ValueY" => intval($CIE['y'] * 1000) )));
-	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
-			$this->GetState();
-		break;
-		*/
-	        default:
-	            throw new Exception("Invalid Ident");
-	    }
+  		If ($this->ReadPropertyBoolean("Open") == true) {
+			switch($Ident) {
+				case "State":
+					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+						"Function" => "BulbSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value, "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
+					SetValueBoolean($this->GetIDForIdent($Ident), $Value);
+					$this->GetState();
+				break;
+				case "Intensity":
+					$Value = min(254, max(0, $Value));
+					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+						"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value, "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
+					SetValueInteger($this->GetIDForIdent($Ident), $Value);
+					$this->GetState();
+				break;
+				case "Fadetime":
+					SetValueInteger($this->GetIDForIdent($Ident), $Value);
+				break;
+				case "Ambiente":
+					$AmmbienteArray = array(0 => "f1e0b5", 1 => "f5faf6", 2 => "efd275");
+					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+						"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $AmmbienteArray[$Value], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
+					SetValueInteger($this->GetIDForIdent($Ident), $Value);
+					$this->GetState();
+				break;
+				case "Color":
+					$ColorArray = array(0 => "4a418a", 1 => "6c83ba", 2 => "8f2686", 3 => "a9d62b", 4 => "c984bb", 
+							    5 => "d6e44b", 6 => "d9337c", 7 => "da5d41", 8 => "dc4b31", 9 => "dcf0f8", 
+							    10 => "e491af", 11 => "e57345", 12 => "e78834", 13 => "e8bedd", 14 => "eaf6fb", 
+							    15 => "ebb63e", 16 => "efd275", 17 => "f1e0b5", 18 => "f2eccf", 19 => "f5faf6");
+					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+						"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $ColorArray[$Value], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
+					SetValueInteger($this->GetIDForIdent($Ident), $Value);
+					$this->GetState();
+				break;
+				/*
+				case "RGB":
+					// Wert von RGB in xyY wandeln
+					$CIE = $this->HexToCIE($Value);
+					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+						"Function" => "BulbRGB", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "ValueX" => intval($CIE['x'] * 1000), "ValueY" => intval($CIE['y'] * 1000) )));
+					SetValueInteger($this->GetIDForIdent($Ident), $Value);
+					$this->GetState();
+				break;
+				*/
+				default:
+				    throw new Exception("Invalid Ident");
+		    	}
+		}
 	}
 	    
 	// Beginn der Funktionen
