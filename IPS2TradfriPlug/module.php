@@ -80,16 +80,18 @@
 	
 	public function RequestAction($Ident, $Value) 
 	{
-  		switch($Ident) {
-	        case "State":
-	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
-				"Function" => "PlugSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
-	            	SetValueBoolean($this->GetIDForIdent($Ident), $Value);
-			$this->GetState();
-		break;
-	        default:
-	            throw new Exception("Invalid Ident");
-	    }
+  		If ($this->ReadPropertyBoolean("Open") == true) {
+			switch($Ident) {
+			case "State":
+				$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+					"Function" => "PlugSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value )));
+				SetValueBoolean($this->GetIDForIdent($Ident), $Value);
+				$this->GetState();
+			break;
+			default:
+			    throw new Exception("Invalid Ident");
+	    		}
+		}
 	}
 	    
 	// Beginn der Funktionen
