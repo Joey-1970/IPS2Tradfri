@@ -265,10 +265,15 @@
 			$this->SendDebug("GetDeviceInfo", "Ergebnis: ".$Result, 0);
 			$DeviceInfo = array();
 			$DeviceInfo = unserialize($Result);
-			$this->WriteAttributeString("Name", $DeviceInfo["Name"]);
-			$this->WriteAttributeString("Typ", $DeviceInfo["Typ"]);
-			$this->WriteAttributeString("Firmware", $DeviceInfo["Firmware"]);
-			//$this->ReloadForm();
+			If (isset($DeviceInfo["Name"])) {
+				$this->WriteAttributeString("Name", $DeviceInfo["Name"]);
+			}
+			If (isset($DeviceInfo["Typ"])) {
+				$this->WriteAttributeString("Typ", $DeviceInfo["Typ"]);
+			}
+			If (isset($DeviceInfo["Firmware"])) {
+				$this->WriteAttributeString("Firmware", $DeviceInfo["Firmware"]);
+			}
 		}
 	}    
 	 
