@@ -42,7 +42,7 @@
 		$arrayActions = array();
 		$arrayActions[] = array("type" => "Label", "label" => "Zur Erzeugung neuer Zugangsdaten: Selbst gewähltes Schlüsselwort eingeben, Button betätigen");
 		$arrayActions[] = array("type" => "ValidationTextBox", "name" => "NewKeyWord", "caption" => "Neues Schlüsselwort");
-		$arrayActions[] = array("type" => "Button", "name" => "Button", "caption" => "Zugsngsdaten erzeugen", "onClick" => 'IPS2TradfriSplitter_GetPresharedKey($id, $NewKeyWord);');
+		$arrayActions[] = array("type" => "Button", "name" => "Button", "caption" => "Zugangsdaten erzeugen", "onClick" => 'IPS2TradfriSplitter_GetPresharedKey($id, $NewKeyWord);');
         	
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements, "actions" => $arrayActions)); 		 
  	}       
