@@ -279,13 +279,19 @@
 			$DeviceInfo = array();
 			$DeviceInfo = unserialize($Result);
 			If (isset($DeviceInfo["Name"])) {
-				$this->WriteAttributeString("Name", $DeviceInfo["Name"]);
+				If ($this->ReadAttributeString("Name") <> $DeviceInfo["Name"]) {
+					$this->WriteAttributeString("Name", $DeviceInfo["Name"]);
+				}
 			}
 			If (isset($DeviceInfo["Typ"])) {
-				$this->WriteAttributeString("Typ", $DeviceInfo["Typ"]);
+				If ($this->ReadAttributeString("Typ") <> $DeviceInfo["Typ"]) {
+					$this->WriteAttributeString("Typ", $DeviceInfo["Typ"]);
+				}
 			}
 			If (isset($DeviceInfo["Firmware"])) {
-				$this->WriteAttributeString("Firmware", $DeviceInfo["Firmware"]);
+				If ($this->ReadAttributeString("Firmware") <> $DeviceInfo["Firmware"]) {
+					$this->WriteAttributeString("Firmware", $DeviceInfo["Firmware"]);
+				}
 			}
 		}
 	}    
