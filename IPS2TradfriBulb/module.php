@@ -148,7 +148,7 @@
 		switch ($Message) {
 			case 10001:
 				// IPS_KERNELSTARTED
-				$this->ApplyChanges;
+				$this->ApplyChanges();
 				break;
 			
 		}
