@@ -14,6 +14,8 @@
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
+		$this->RegisterMessage(0, IPS_KERNELMESSAGE);
+		
 		$this->ConnectParent("{562389F8-739F-644A-4FC7-36F2CE3AFE4F}");
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("DeviceID", 0);
@@ -63,7 +65,7 @@
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
 		
-		If ($this->ReadPropertyBoolean("Open") == true) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (IPS_GetKernelRunlevel() == KR_READY)) {
 			If ($this->ReadPropertyInteger("DeviceID") >= 65537) {
 				$this->SetStatus(102);
 				$this->GetDeviceInfo();
@@ -82,6 +84,17 @@
 		}	
 	}
 	
+	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
+    	{
+		switch ($Message) {
+			case 10001:
+				// IPS_KERNELSTARTED
+				$this->ApplyChanges;
+				break;
+			
+		}
+    	}               
+	    
 	public function RequestAction($Ident, $Value) 
 	{
   		switch($Ident) {
