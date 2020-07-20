@@ -65,7 +65,7 @@
 			If ($this->ReadPropertyInteger("DeviceID") >= 65537) {
 				$this->SetStatus(102);
 				If (IPS_GetKernelRunlevel() == KR_READY) {
-					//$this->GetDeviceInfo();
+					$this->GetDeviceInfo();
 					$this->GetState();
 					$this->SetTimerInterval("Timer_1", 1000);
 				}
