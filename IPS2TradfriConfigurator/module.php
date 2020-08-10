@@ -136,6 +136,9 @@
 		elseIf ($Class == "Plug") {
 			$guid = "{89756350-E4DB-F332-5B25-979C66F005D5}";
 		}
+		elseIf ($Class == "Blind") {
+			$guid = "{D905AD59-7A30-FDB0-B1C2-FFFE2E2E24F6}";
+		}
 	    	$Result = 0;
 	    	// Modulinstanzen suchen
 	    	$InstanceArray = array();
