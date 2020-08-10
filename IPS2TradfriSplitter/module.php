@@ -213,7 +213,7 @@
 			If (is_array($Output)) {
 				If (isset($Output[3])) {
 					$data = json_decode($Output[3]);
-					
+					/*
 					If (isset($data->{'9019'})) {
 						$ResultArray[9019] = $data->{'9019'};
 					}
@@ -242,8 +242,8 @@
 						}
 					}
 					
-				
-					/*
+					*/
+					
 					If (isset($data[9019])) {
 						$ResultArray[9019] = $data[9019];
 					}
@@ -271,7 +271,7 @@
 							$ResultArray[$Key] = $State;
 						}
 					}
-					*/
+					
 				}
 			}
     		}
