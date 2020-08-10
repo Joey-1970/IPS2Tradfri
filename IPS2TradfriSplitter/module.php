@@ -242,11 +242,11 @@
 						}
 					}
 					*/
-					If (isset($data->9019)) {
-						$ResultArray[9019] = $data->9019;
+					If (isset($data->["9019")) {
+						$ResultArray[9019] = $data->["9019"];
 					}
-					If (isset($data->[3311])) {
-						$StateArray = $data->[3311][0];
+					If (isset($data->["3311"])) {
+						$StateArray = $data->["3311"]["0"];
 						foreach ($StateArray as $Key => $State) {
 							$ResultArray[$Key] = $State;
 						}
