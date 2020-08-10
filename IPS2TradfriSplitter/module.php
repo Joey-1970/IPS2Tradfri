@@ -213,36 +213,6 @@
 			If (is_array($Output)) {
 				If (isset($Output[3])) {
 					$data = json_decode($Output[3], true);
-					/*
-					If (isset($data->{'9019'})) {
-						$ResultArray[9019] = $data->{'9019'};
-					}
-					If (isset($data->{'3311'})) {
-						$StateArray = $data->{'3311'}{'0'};
-						foreach ($StateArray as $Key => $State) {
-							$ResultArray[$Key] = $State;
-						}
-					}
-					elseif (isset($data->{'3300'})) {
-						$StateArray = $data->{'3300'}{'0'};
-						foreach ($StateArray as $Key => $State) {
-							$ResultArray[$Key] = $State;
-						}
-					}
-					elseif (isset($data->{'3312'})) {
-						$StateArray = $data->{'3312'}{'0'};
-						foreach ($StateArray as $Key => $State) {
-							$ResultArray[$Key] = $State;
-						}
-					}
-					elseif (isset($data->{'15015'})) {
-						$StateArray = $data->{'15015'}{'0'};
-						foreach ($StateArray as $Key => $State) {
-							$ResultArray[$Key] = $State;
-						}
-					}
-					
-					*/
 					
 					If (isset($data[9019])) {
 						$ResultArray[9019] = $data[9019];
@@ -271,7 +241,6 @@
 							$ResultArray[$Key] = $State;
 						}
 					}
-					
 				}
 			}
     		}
