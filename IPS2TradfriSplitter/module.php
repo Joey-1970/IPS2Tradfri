@@ -2,7 +2,8 @@
     // Klassendefinition
     class IPS2TradfriSplitter extends IPSModule 
     {
-	   
+	// https://github.com/glenndehaan/ikea-tradfri-coap-docs
+	    
 	// Überschreibt die interne IPS_Create($id) Funktion
         public function Create() 
         {
@@ -206,12 +207,12 @@
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
-		$State = intval($State);
+		$Position = floatval($Value);
 		
 		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
 			$this->SendDebug("PlugSwitch", "Ausfuehrung: ".$DeviceID, 0);
-			
-			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3312": [{ "5850": '.$State.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
+			// coap-client -m put -u "$TF_USERNAME" -k "$TF_PRESHARED_KEY" -e '{ "15015": [{ "5536": 0.0 }] }' "coaps://$TF_GATEWAYIP:5684/15001/$TF_DEVICEID"
+			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "15015": [{ "5536": '.$Position.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
 			$Response = exec($Message." 2>&1", $Output);
 		}
 	}    
