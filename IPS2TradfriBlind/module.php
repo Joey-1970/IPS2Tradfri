@@ -25,12 +25,15 @@
 		$this->RegisterAttributeString("Typ", "");
 		$this->RegisterAttributeString("Firmware", "");
 		
+		$this->RegisterProfileFloat("IPS2Tradfri.Position", "Intensity", "", " %", 0, 100, 0.1, 1);
+		
+		
 		//Status-Variablen anlegen
 		$this->RegisterVariableInteger("Move", "Status", "~ShutterMoveStop", 10);
 		$this->EnableAction("Move");
 		
-		$this->RegisterVariableInteger("State", "Status", "", 20);
-		$this->EnableAction("State");
+		$this->RegisterVariableFloat("Position", "Position", "IPS2Tradfri.Position", 20);
+		$this->EnableAction("Position");
 		
 		$this->RegisterVariableBoolean("Available", "Verfügbar", "~Alert.Reversed", 30);
         }
@@ -44,7 +47,7 @@
 		$arrayStatus[] = array("code" => 202, "icon" => "error", "caption" => "Kommunikationfehler!");
 				
 		$arrayElements = array(); 
-		$arrayElements[] = array("type" => "Label", "label" => "UNGETESTET!!"); 
+		$arrayElements[] = array("type" => "Label", "caption" => "UNGETESTET!!"); 
 		
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
 		$arrayElements[] = array("type" => "NumberSpinner", "name" => "DeviceID", "caption" => "Device ID", "minimum" => 65537, "maximum" => 66000);
@@ -103,10 +106,10 @@
 	public function RequestAction($Ident, $Value) 
 	{
   		switch($Ident) {
-	        case "State":
+	        case "Position":
 	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "Blind", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $Value )));
-	            	//SetValueBoolean($this->GetIDForIdent($Ident), $Value);
+	            	SetValueFloat($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
 	        default:
@@ -123,18 +126,17 @@
 			$this->SendDebug("GetState", "Ergebnis: ".$Result, 0);
 			$DeviceStateArray = array();
 			$DeviceStateArray = unserialize($Result);
-			/*
+			
 			If (isset($DeviceStateArray[9019])) {
 				If (GetValueBoolean($this->GetIDForIdent("Available")) <> $DeviceStateArray[9019]) {
 					SetValueBoolean($this->GetIDForIdent("Available"), $DeviceStateArray[9019]);
 				}
 			}
-			If (isset($DeviceStateArray[5850])) {
-				If (GetValueBoolean($this->GetIDForIdent("State")) <> $DeviceStateArray[5850]) {
-					SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
+			If (isset($DeviceStateArray[5536])) {
+				If (GetValueFloat($this->GetIDForIdent("Position")) <> $DeviceStateArray[5536]) {
+					SetValueFloat($this->GetIDForIdent("Position"), $DeviceStateArray[5536]);
 				}
 			}
-			*/
 		}
 	}
 	
@@ -152,6 +154,23 @@
 			//$this->ReloadForm();
 		}
 	}    
-	    
+	
+	private function RegisterProfileFloat($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize, $Digits)
+	{
+	        if (!IPS_VariableProfileExists($Name))
+	        {
+	            IPS_CreateVariableProfile($Name, 2);
+	        }
+	        else
+	        {
+	            $profile = IPS_GetVariableProfile($Name);
+	            if ($profile['ProfileType'] != 2)
+	                throw new Exception("Variable profile type does not match for profile " . $Name);
+	        }
+	        IPS_SetVariableProfileIcon($Name, $Icon);
+	        IPS_SetVariableProfileText($Name, $Prefix, $Suffix);
+	        IPS_SetVariableProfileValues($Name, $MinValue, $MaxValue, $StepSize);
+	        IPS_SetVariableProfileDigits($Name, $Digits);
+	}
 }
 ?>
