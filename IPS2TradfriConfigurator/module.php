@@ -64,6 +64,10 @@
 					$arrayCreate[] = array("moduleID" => "{89756350-E4DB-F332-5B25-979C66F005D5}",  "location" => $RootNames,
 					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Open" => true));
 				}
+				elseIf ($DeviceArray[$i]["Class"] == "Blind") {
+					$arrayCreate[] = array("moduleID" => "{D905AD59-7A30-FDB0-B1C2-FFFE2E2E24F6}",  "location" => $RootNames,
+					       "configuration" => array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Open" => true));
+				}
 				$arrayValues[] = array("DeviceID" => $DeviceArray[$i]["DeviceID"], "Name" => $DeviceArray[$i]["Name"], "Firmware" => $DeviceArray[$i]["Firmware"], "Class" => $DeviceArray[$i]["Class"], "Typ" => $DeviceArray[$i]["Typ"],
 					       "instanceID" => $DeviceArray[$i]["Instance"], "create" => $arrayCreate);
 			}
