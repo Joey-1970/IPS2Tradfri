@@ -51,13 +51,13 @@
 		
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
 		$arrayElements[] = array("type" => "NumberSpinner", "name" => "DeviceID", "caption" => "Device ID", "minimum" => 65537, "maximum" => 66000);
-		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
-		$arrayElements[] = array("type" => "Label", "label" => "Name: ".$this->ReadAttributeString("Name")); 
-		$arrayElements[] = array("type" => "Label", "label" => "Typ: ".$this->ReadAttributeString("Typ")); 
-		$arrayElements[] = array("type" => "Label", "label" => "Firmware: ".$this->ReadAttributeString("Firmware")); 
+		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "Label", "caption" => "Name: ".$this->ReadAttributeString("Name")); 
+		$arrayElements[] = array("type" => "Label", "caption" => "Typ: ".$this->ReadAttributeString("Typ")); 
+		$arrayElements[] = array("type" => "Label", "caption" => "Firmware: ".$this->ReadAttributeString("Firmware")); 
 		
 		$arrayActions = array(); 
-		$arrayActions[] = array("type" => "Label", "label" => "Test Center"); 
+		$arrayActions[] = array("type" => "Label", "caption" => "Test Center"); 
 		$arrayActions[] = array("type" => "TestCenter", "name" => "TestCenter");
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements, "actions" => $arrayActions)); 		 
