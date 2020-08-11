@@ -29,7 +29,7 @@
 		
 		
 		//Status-Variablen anlegen
-		$this->RegisterVariableInteger("Move", "Status", "~ShutterMoveStop", 10);
+		$this->RegisterVariableInteger("Move", "Steuerung", "~ShutterMoveStop", 10);
 		$this->EnableAction("Move");
 		
 		$this->RegisterVariableFloat("Position", "Position", "IPS2Tradfri.Position", 20);
@@ -110,6 +110,21 @@
 	            	$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 				"Function" => "Blind", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $Value )));
 	            	SetValueFloat($this->GetIDForIdent($Ident), $Value);
+			$this->GetState();
+		break;
+		case "Move":
+			If ($Value == 0) { // Öffnen
+	            		$Target = 100.0;
+			}
+			elseif ($Value == 2) { // Stop
+	            		$Target = GetValueFloat($this->GetIDForIdent("Position"));
+			}
+			elseif ($Value == 4) { // Schließen
+	            		$Target = 0.0;
+			}
+			$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
+					"Function" => "Blind", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $Target)));
+	            	SetValueInteger($this->GetIDForIdent($Ident), $Value);
 			$this->GetState();
 		break;
 	        default:
