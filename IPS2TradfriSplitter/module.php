@@ -305,6 +305,7 @@
 			
 			If (is_array($Output)) {
 				If (isset($Output[3])) {
+					/*
 					$data = json_decode($Output[3]);
 					$DeviceInfo["Name"] = $data->{'9001'};
 					$DeviceInfo["Typ"] = $data->{'3'}->{'1'};
@@ -323,6 +324,30 @@
 						$DeviceInfo["Class"] = "Remote";
 					}
 					elseif (isset($data->{'15015'})) {
+						$DeviceInfo["Class"] = "Blind";
+					}
+					else {
+						$DeviceInfo["Class"] = "Unknown";
+					}
+					*/
+					$data = json_decode($Output[3], true);
+					$DeviceInfo["Name"] = $data[9001];
+					$DeviceInfo["Typ"] = $data[3][1];
+					$DeviceInfo["Firmware"] = $data[3][3];
+					If (isset($data[3311])) {
+						$DeviceInfo["Class"] = "Bulb";
+						$DeviceInfo["Specification"] = $this->BulbDeviceType($data[3][1]);
+					}
+					elseif (isset($data[3300])) {
+						$DeviceInfo["Class"] = "MotionSensor";
+					}
+					elseif (isset($data[3312])) {
+						$DeviceInfo["Class"] = "Plug";
+					}
+					elseif (isset($data[15009])) {
+						$DeviceInfo["Class"] = "Remote";
+					}
+					elseif (isset($data[15015])) {
 						$DeviceInfo["Class"] = "Blind";
 					}
 					else {
@@ -368,9 +393,14 @@
 			
 			If (is_array($Output)) {
 				If (isset($Output[3])) {
+					/*
 					$data = json_decode($Output[3]);
 					$GatewayInfoArray["Firmware"] = $data->{'9029'};
 					$this->WriteAttributeString("GatewayFirmware", $data->{'9029'});
+					*/
+					$data = json_decode($Output[3], true);
+					$GatewayInfoArray["Firmware"] = $data[9029];
+					$this->WriteAttributeString("GatewayFirmware", $data[9029]);
 				}
 			}
 		}
@@ -406,12 +436,29 @@
 			$Response = exec($Message." 2>&1", $Output);
 			If (is_array($Output)) {
 				If (isset($Output[3])) {
+					/*
 					$data = json_decode($Output[3]);
         				If (isset($data)) {
             					// Key wurde generiert
 						$this->SendDebug("GetPresharedKey", "Key wurde erfolgreich generiert", 0);
             					$Result = $data->{'9091'};
 						$this->WriteAttributeString("PresharedKey", $data->{'9091'});
+						$this->WriteAttributeString("Identifier", $Identifier);
+						$this->ReloadForm();
+        				}
+        				else {
+            					// Key konnte nicht generiert werden
+						$this->SendDebug("GetPresharedKey", "Key konnte nicht generiert werden!", 0);
+						Echo "Key konnte nicht generiert werden!\nMöglicherweise ist das Schlüsselwort schon einmal verwendet worden?";
+            					$Result = false;
+        				}
+					*/
+					$data = json_decode($Output[3], true);
+        				If (isset($data)) {
+            					// Key wurde generiert
+						$this->SendDebug("GetPresharedKey", "Key wurde erfolgreich generiert", 0);
+            					$Result = $data[9091];
+						$this->WriteAttributeString("PresharedKey", $data[9091]);
 						$this->WriteAttributeString("Identifier", $Identifier);
 						$this->ReloadForm();
         				}
