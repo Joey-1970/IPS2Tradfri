@@ -117,14 +117,14 @@
 				 If (($this->ReadPropertyInteger("DeviceSpecification") == 3) OR ($this->ReadPropertyInteger("DeviceSpecification") == 0)) {
 					$this->EnableAction("Color");
 					IPS_SetHidden($this->GetIDForIdent("Color"), false); 
-					//$this->EnableAction("RGB");
-					//IPS_SetHidden($this->GetIDForIdent("RGB"), false); 
+					$this->EnableAction("RGB");
+					IPS_SetHidden($this->GetIDForIdent("RGB"), false); 
 				}
 				else {
 					$this->DisableAction("Color");
 					IPS_SetHidden($this->GetIDForIdent("Color"), true); 
-					//$this->DisableAction("RGB");
-					//IPS_SetHidden($this->GetIDForIdent("RGB"), true); 
+					$this->DisableAction("RGB");
+					IPS_SetHidden($this->GetIDForIdent("RGB"), true); 
 				}
 
 				$this->SetStatus(102);
