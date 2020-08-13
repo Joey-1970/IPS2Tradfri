@@ -168,24 +168,24 @@
 						"Function" => "BulbSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value, "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
 					SetValueBoolean($this->GetIDForIdent($Ident), $Value);
 					$this->GetState();
-				break;
+					break;
 				case "Intensity":
 					$Value = min(254, max(0, $Value));
 					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 						"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value, "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
 					SetValueInteger($this->GetIDForIdent($Ident), $Value);
 					$this->GetState();
-				break;
+					break;
 				case "Fadetime":
 					SetValueInteger($this->GetIDForIdent($Ident), $Value);
-				break;
+					break;
 				case "Ambiente":
 					$AmmbienteArray = array(0 => "f1e0b5", 1 => "f5faf6", 2 => "efd275");
 					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 						"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $AmmbienteArray[$Value], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
 					SetValueInteger($this->GetIDForIdent($Ident), $Value);
 					$this->GetState();
-				break;
+					break;
 				case "Color":
 					$ColorArray = array(0 => "4a418a", 1 => "6c83ba", 2 => "8f2686", 3 => "a9d62b", 4 => "c984bb", 
 							    5 => "d6e44b", 6 => "d9337c", 7 => "da5d41", 8 => "dc4b31", 9 => "dcf0f8", 
@@ -195,8 +195,7 @@
 						"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $ColorArray[$Value], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
 					SetValueInteger($this->GetIDForIdent($Ident), $Value);
 					$this->GetState();
-				break;
-				
+					break;
 				case "RGB":
 					// Wert von RGB in xyY wandeln
 					$CIE = $this->HexToCIE($Value);
@@ -263,8 +262,8 @@
 			}
 			
 			If ((isset($DeviceStateArray[5709])) AND (isset($DeviceStateArray[5710]))) {
-				$ValueX = $DeviceStateArray[5709] / 1000;
-				$ValueY = $DeviceStateArray[5710] / 1000;
+				$ValueX = $DeviceStateArray[5709];
+				$ValueY = $DeviceStateArray[5710];
 				// Umwandlung von CIE zu RGB
 				$ValueRGB = $this->CIEToRGB($ValueX, $ValueY);
 				If (GetValueInteger($this->GetIDForIdent("RGB")) <> $ValueRGB) {
