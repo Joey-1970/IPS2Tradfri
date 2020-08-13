@@ -166,24 +166,24 @@
 				case "State":
 					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 						"Function" => "BulbSwitch", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "State" => $Value, "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
-					SetValueBoolean($this->GetIDForIdent($Ident), $Value);
+					$this->SetValue($Ident, $Value);
 					$this->GetState();
 					break;
 				case "Intensity":
 					$Value = min(254, max(0, $Value));
 					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 						"Function" => "BulbIntensity", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Intensity" => $Value, "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
-					SetValueInteger($this->GetIDForIdent($Ident), $Value);
+					$this->SetValue($Ident, $Value);
 					$this->GetState();
 					break;
 				case "Fadetime":
-					SetValueInteger($this->GetIDForIdent($Ident), $Value);
+					$this->SetValue($Ident, $Value);
 					break;
 				case "Ambiente":
 					$AmmbienteArray = array(0 => "f1e0b5", 1 => "f5faf6", 2 => "efd275");
 					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 						"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $AmmbienteArray[$Value], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
-					SetValueInteger($this->GetIDForIdent($Ident), $Value);
+					$this->SetValue($Ident, $Value);
 					$this->GetState();
 					break;
 				case "Color":
@@ -193,7 +193,7 @@
 							    15 => "ebb63e", 16 => "efd275", 17 => "f1e0b5", 18 => "f2eccf", 19 => "f5faf6");
 					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 						"Function" => "BulbAmbiente", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "Value" => $ColorArray[$Value], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
-					SetValueInteger($this->GetIDForIdent($Ident), $Value);
+					$this->SetValue($Ident, $Value);
 					$this->GetState();
 					break;
 				case "RGB":
@@ -201,7 +201,7 @@
 					$CIE = $this->HexToCIE($Value);
 					$Result = $this->SendDataToParent(json_encode(Array("DataID"=> "{4AA318CB-CA9A-2467-3079-A35AD1577771}", 
 						"Function" => "BulbRGB", "DeviceID" => $this->ReadPropertyInteger("DeviceID"), "ValueX" => $CIE['x'], "ValueY" => $CIE['y'], "Fadetime" => GetValueInteger($this->GetIDForIdent("Fadetime")) )));
-					SetValueInteger($this->GetIDForIdent($Ident), $Value);
+					$this->SetValue($Ident, $Value);
 					$this->GetState();
 				break;
 				
@@ -222,31 +222,31 @@
 			$DeviceStateArray = unserialize($Result);
 			
 			If (isset($DeviceStateArray[9019])) {
-				If (GetValueBoolean($this->GetIDForIdent("Available")) <> $DeviceStateArray[9019]) {
-					SetValueBoolean($this->GetIDForIdent("Available"), $DeviceStateArray[9019]);
+				If ($this->GetValue("Available") <> $DeviceStateArray[9019]) {
+					$this->SetValue("Available", $DeviceStateArray[9019]);
 				}
 			}
 			If (isset($DeviceStateArray[5850])) {
-				If (GetValueBoolean($this->GetIDForIdent("State")) <> $DeviceStateArray[5850]) {
-					SetValueBoolean($this->GetIDForIdent("State"), $DeviceStateArray[5850]);
+				If ($this->GetValue("State") <> $DeviceStateArray[5850]) {
+					$this->SetValue("State", $DeviceStateArray[5850]);
 				}
 			}
 			If (isset($DeviceStateArray[5851])) {
-				If (GetValueInteger($this->GetIDForIdent("Intensity")) <> $DeviceStateArray[5851]) {
-					SetValueInteger($this->GetIDForIdent("Intensity"), $DeviceStateArray[5851]);
+				If ($this->GetValue("Intensity") <> $DeviceStateArray[5851]) {
+					$this->SetValue("Intensity", $DeviceStateArray[5851]);
 				}
 			}
 			If (isset($DeviceStateArray[5712])) {
-				If (GetValueInteger($this->GetIDForIdent("Fadetime")) <> $DeviceStateArray[5712]) {
-					SetValueInteger($this->GetIDForIdent("Fadetime"), $DeviceStateArray[5712]);
+				If ($this->GetValue("Fadetime") <> $DeviceStateArray[5712]) {
+					$this->SetValue("Fadetime", $DeviceStateArray[5712]);
 				}
 			}
 			If (isset($DeviceStateArray[5706])) {
 				$ColorValue = $DeviceStateArray[5706];
 				$AmmbienteArray = array("f1e0b5" => 0, "f5faf6" => 1, "efd275" => 2);
 				if (array_key_exists($ColorValue, $AmmbienteArray)) {
-					If (GetValueInteger($this->GetIDForIdent("Ambiente")) <> $AmmbienteArray[$ColorValue]) {
-						SetValueInteger($this->GetIDForIdent("Ambiente"), $AmmbienteArray[$ColorValue]);
+					If ($this->GetValue("Ambiente") <> $AmmbienteArray[$ColorValue]) {
+						$this->SetValue("Ambiente", $AmmbienteArray[$ColorValue]);
 					}
 				}
 
