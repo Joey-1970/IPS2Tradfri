@@ -261,17 +261,17 @@
 					}
 				}
 			}
-			/*
+			
 			If ((isset($DeviceStateArray[5709])) AND (isset($DeviceStateArray[5710]))) {
 				$ValueX = $DeviceStateArray[5709] / 1000;
 				$ValueY = $DeviceStateArray[5710] / 1000;
 				// Umwandlung von CIE zu RGB
-				$ValueRGB = $this->CIEToHex($ValueX, $ValueY);
+				$ValueRGB = $this->CIEToRGB($ValueX, $ValueY);
 				If (GetValueInteger($this->GetIDForIdent("RGB")) <> $ValueRGB) {
 					SetValueInteger($this->GetIDForIdent("RGB"), $ValueRGB);
 				}
 			}
-			*/
+			
 		}
 	}
 	
@@ -324,13 +324,11 @@
 	return $cie;
 	} 
 	 
-	private function CIEToRGB($x, $y, $brightness = 255, $opt = false)
+	private function CIEToRGB($x, $y)
 	{
-
-		if ($opt) {
-		    $x = $x / 65536;
-		    $y = $y / 65536;
-		}
+		$brightness = 255
+		$x = $x / 65536;
+		$y = $y / 65536;
 
 		$z = 1.0 - $x - $y;
 		$Y = $brightness / 255;
@@ -367,15 +365,6 @@
 	return $color;
 	} 
 	    
-	private function HexToRGB($value)
-	{
-		$RGB = [];
-		$RGB[0] = (($value >> 16) & 0xFF);
-		$RGB[1] = (($value >> 8) & 0xFF);
-		$RGB[2] = ($value & 0xFF);
-		//$this->SendDebug('HexToRGB', 'R: ' . $RGB[0] . ' G: ' . $RGB[1] . ' B: ' . $RGB[2], 0);
-	return $RGB;
-	} 
 	
 	/*
 	private function HexToCIE($Hex)
