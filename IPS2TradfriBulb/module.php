@@ -317,9 +317,14 @@
 		$Z = $red * 0.000088 + $green * 0.072310 + $blue * 0.986039;
 		$this->SendDebug('HexToCIE', 'X: ' . $X . ' Y: ' . $Y . ' Z: ' . $Z, 0);
 
-		
-		$cie['x'] = round(($X / ($X + $Y + $Z) * 65536), 0);
-		$cie['y'] = round(($Y / ($X + $Y + $Z) * 65536), 0);
+		If (($X + $Y + $Z) > 0) {
+			$cie['x'] = round(($X / ($X + $Y + $Z) * 65536), 0);
+			$cie['y'] = round(($Y / ($X + $Y + $Z) * 65536), 0);
+		}
+		else {
+			$cie['x'] = 0;
+			$cie['y'] = 0;
+		}
 		
 	return $cie;
 	} 
