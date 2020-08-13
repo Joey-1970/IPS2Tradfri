@@ -307,6 +307,7 @@
 		$red = (($HexColor >> 16) & 0xFF);
 		$green = (($HexColor >> 8) & 0xFF);
 		$blue = ($HexColor & 0xFF);
+		$this->SendDebug('HexToCIE', 'red: ' . $red . ' green: ' . $green . ' blue: ' . $blue, 0);
 		
 		$red = ($red > 0.04045) ? pow(($red + 0.055) / (1.0 + 0.055), 2.4) : ($red / 12.92);
 		$green = ($green > 0.04045) ? pow(($green + 0.055) / (1.0 + 0.055), 2.4) : ($green / 12.92);
@@ -315,7 +316,7 @@
 		$X = $red * 0.664511 + $green * 0.154324 + $blue * 0.162028;
 		$Y = $red * 0.283881 + $green * 0.668433 + $blue * 0.047685;
 		$Z = $red * 0.000088 + $green * 0.072310 + $blue * 0.986039;
-		//$this->SendDebug('RGBToCIE', 'X: ' . $X . ' Y: ' . $Y . ' Z: ' . $Z, 0);
+		$this->SendDebug('HexToCIE', 'X: ' . $X . ' Y: ' . $Y . ' Z: ' . $Z, 0);
 
 		
 		$cie['x'] = round(($X / ($X + $Y + $Z) * 65536), 0);
