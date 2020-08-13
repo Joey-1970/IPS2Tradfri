@@ -326,7 +326,7 @@
 	 
 	private function CIEToRGB($x, $y)
 	{
-		$brightness = 255
+		$brightness = 255;
 		$x = $x / 65536;
 		$y = $y / 65536;
 
