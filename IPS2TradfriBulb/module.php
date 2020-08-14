@@ -365,10 +365,7 @@
 		$green = ceil($green * 255);
 		$blue = ceil($blue * 255);
 		
-		$HexAlt = ($red << 16) | ($green << 8) | $blue; 
-		//$color = sprintf('#%02x%02x%02x', $red, $green, $blue);
-		$Hex = hexdec(str_pad(dechex($red), 2,'0', STR_PAD_LEFT).str_pad(dechex($green), 2,'0', STR_PAD_LEFT).str_pad(dechex($blue), 2,'0', STR_PAD_LEFT));
-		$this->SendDebug('CIEToRGB', 'HexAlt: '.$HexAlt.' Hex: '.$Hex, 0);
+		$Hex = ($red << 16) | ($green << 8) | $blue;
 	return $Hex;
 	} 
 	    
