@@ -265,7 +265,7 @@
 				$ValueX = $DeviceStateArray[5709];
 				$ValueY = $DeviceStateArray[5710];
 				// Umwandlung von CIE zu RGB
-				$ValueRGB = $this->CIEToRGB($ValueX, $ValueY);
+				$ValueRGB = $this->CIEToHex($ValueX, $ValueY);
 				If (GetValueInteger($this->GetIDForIdent("RGB")) <> $ValueRGB) {
 					SetValueInteger($this->GetIDForIdent("RGB"), $ValueRGB);
 				}
@@ -300,7 +300,6 @@
 		}
 	}    
 	
-	// Kais Funktionen
 	private function HexToCIE($HexColor)
 	{
 		$red = (($HexColor >> 16) & 0xFF);
@@ -329,7 +328,7 @@
 	return $cie;
 	} 
 	 
-	private function CIEToRGB($x, $y)
+	private function CIEToHex($x, $y)
 	{
 		$brightness = 255;
 		$x = $x / 65536;
