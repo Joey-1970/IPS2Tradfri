@@ -95,9 +95,7 @@
 		switch ($Message) {
 			case 10100:
 				// IPS_KERNELSTARTED
-				$this->GetDeviceInfo();
-				$this->GetState();
-				$this->SetTimerInterval("Timer_1", 1000);
+				$this->ApplyChanges();
 				break;
 			
 		}
