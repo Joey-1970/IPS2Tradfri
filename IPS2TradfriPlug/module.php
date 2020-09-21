@@ -2,13 +2,6 @@
     // Klassendefinition
     class IPS2TradfriPlug extends IPSModule 
     {
-	public function Destroy() 
-	{
-		//Never delete this line!
-		parent::Destroy();
-		$this->SetTimerInterval("Timer_1", 0);
-	}  
-	    
 	// Überschreibt die interne IPS_Create($id) Funktion
         public function Create() 
         {
