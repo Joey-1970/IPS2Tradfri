@@ -125,7 +125,7 @@
 			}
 		}
 	}
-	
+	    
 	private function GetDeviceInfo()
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
@@ -134,10 +134,21 @@
 			$this->SendDebug("GetDeviceInfo", "Ergebnis: ".$Result, 0);
 			$DeviceInfo = array();
 			$DeviceInfo = unserialize($Result);
-			$this->WriteAttributeString("Name", $DeviceInfo["Name"]);
-			$this->WriteAttributeString("Typ", $DeviceInfo["Typ"]);
-			$this->WriteAttributeString("Firmware", $DeviceInfo["Firmware"]);
-			//$this->ReloadForm();
+			If (isset($DeviceInfo["Name"])) {
+				If ($this->ReadAttributeString("Name") <> $DeviceInfo["Name"]) {
+					$this->WriteAttributeString("Name", $DeviceInfo["Name"]);
+				}
+			}
+			If (isset($DeviceInfo["Typ"])) {
+				If ($this->ReadAttributeString("Typ") <> $DeviceInfo["Typ"]) {
+					$this->WriteAttributeString("Typ", $DeviceInfo["Typ"]);
+				}
+			}
+			If (isset($DeviceInfo["Firmware"])) {
+				If ($this->ReadAttributeString("Firmware") <> $DeviceInfo["Firmware"]) {
+					$this->WriteAttributeString("Firmware", $DeviceInfo["Firmware"]);
+				}
+			}
 		}
 	}    
 	    
