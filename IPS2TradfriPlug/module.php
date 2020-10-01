@@ -7,7 +7,7 @@
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
-		$this->RegisterMessage(0, IPS_KERNELMESSAGE);
+		$this->RegisterMessage(0, IPS_KERNELSTARTED);
 		
 		$this->ConnectParent("{562389F8-739F-644A-4FC7-36F2CE3AFE4F}");
 		$this->RegisterPropertyBoolean("Open", false);
@@ -79,7 +79,7 @@
 	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     	{
 		switch ($Message) {
-			case 10100:
+			case 10001:
 				// IPS_KERNELSTARTED
 				$this->ApplyChanges();
 				break;
