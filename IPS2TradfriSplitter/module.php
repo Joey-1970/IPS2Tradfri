@@ -63,8 +63,18 @@
 				$this->SetStatus(102);
 			}
 			else {
-				Echo "Syntax der IP inkorrekt, Kein gültiger Key oder kein korrektes Schlüsselwort!";
-				$this->SendDebug("ApplyChanges", "Syntax der IP inkorrekt, Kein gültiger Key oder kein korrektes Schlüsselwort!", 0);
+				$MessageText = "";
+				If (filter_var($IP, FILTER_VALIDATE_IP) == false) {
+					$MessageText = "Syntax der IP inkorrekt! ";
+				}
+				If (strlen($Key) <> 16) {
+					$MessageText = $MessageText." Schlüssel ist inkorrekt! ";
+				}
+				If (strlen($Identifier) == 0) {
+					$MessageText = $MessageText." Schlüsselwort ist inkorrekt! ";
+				}				
+				Echo trim($MessageText);
+				$this->SendDebug("ApplyChanges", trim($MessageText), 0);
 				$this->SetStatus(203);
 			}
 			
