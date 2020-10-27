@@ -58,14 +58,17 @@
 			$Key = $this->ReadAttributeString("PresharedKey");
 			$Identifier = $this->ReadAttributeString("Identifier");
 			$IP = $this->ReadPropertyString("GatewayIP");
-			If ((strlen($Identifier) > 0) AND (strlen($Key) == 16) AND (filter_var($IP, FILTER_VALIDATE_IP))) {
+			If ((strlen($Identifier) > 0) AND (strlen($Key) == 16) AND (filter_var($IP, FILTER_VALIDATE_IP)) AND ($this->ConnectionTest() == true)) {
 				$this->GatewayInfo();
 				$this->SetStatus(102);
 			}
 			else {
 				$MessageText = "";
 				If (filter_var($IP, FILTER_VALIDATE_IP) == false) {
-					$MessageText = "Syntax der IP inkorrekt! ";
+					$MessageText = " Syntax der IP inkorrekt! ";
+				}
+				If ($this->ConnectionTest() == false) {
+					$MessageText = " Verbindungstest war nicht erfolgreich! ";
 				}
 				If (strlen($Key) <> 16) {
 					$MessageText = $MessageText." Schlüssel ist inkorrekt! ";
@@ -136,7 +139,7 @@
 		$Identifier = $this->ReadAttributeString("Identifier");
 		$State = intval($State);
 		
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("SwitchBulb", "Ausfuehrung: ".$DeviceID, 0);
 			// '{ "3311": [{ "5851": 127, "5712": 10 }] }'
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5850": '.$State.', "5712": '.$Fadetime.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
@@ -149,7 +152,7 @@
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("BulbIntensity", "Ausfuehrung: ".$DeviceID, 0);
 			
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5851": '.$Intensity.', "5712": '.$Fadetime.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
@@ -162,7 +165,7 @@
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("BulbAmbiente", "Ausfuehrung: ".$DeviceID." - ".$Value, 0);
 			
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5706": "'.$Value.'", "5712": '.$Fadetime.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
@@ -175,7 +178,7 @@
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("BulbRGB", "Ausfuehrung: ".$DeviceID." - X: ".$x." - Y: ".$y, 0);
 			
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [ {"5709": '.$x.', "5710": '.$y.', "5712": '.$Fadetime.' } ] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
@@ -189,7 +192,7 @@
 		$IP = $this->ReadPropertyString("GatewayIP");
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("BulbFadetime", "Ausfuehrung: ".$DeviceID, 0);
 			
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3311": [{ "5712": '.$Value.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
@@ -204,7 +207,7 @@
 		$Identifier = $this->ReadAttributeString("Identifier");
 		$State = intval($State);
 		
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("PlugSwitch", "Ausfuehrung: ".$DeviceID, 0);
 			
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "3312": [{ "5850": '.$State.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
@@ -219,7 +222,7 @@
 		$Identifier = $this->ReadAttributeString("Identifier");
 		$Position = floatval($Value);
 		
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("PlugSwitch", "Ausfuehrung: ".$DeviceID, 0);
 			// coap-client -m put -u "$TF_USERNAME" -k "$TF_PRESHARED_KEY" -e '{ "15015": [{ "5536": 0.0 }] }' "coaps://$TF_GATEWAYIP:5684/15001/$TF_DEVICEID"
 			$Message = 'sudo coap-client -m put -u "'.$Identifier.'" -k "'.$Key.'" -e \'{ "15015": [{ "5536": '.$Position.' }] }\' "coaps://'.$IP.':5684/15001/'.$DeviceID.'"'; 
@@ -233,7 +236,7 @@
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
 		$ResultArray = array();
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("DeviceState", "Ausfuehrung: ".$DeviceID, 0);
 			
 			$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
@@ -283,7 +286,7 @@
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
 		$DeviceInfoArray = array();
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("DeviceList", "Ausfuehrung", 0);
 			$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001"';
 			$Response = exec($Message." 2>&1", $Output);
@@ -308,7 +311,7 @@
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
 		$DeviceInfo = array();
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("DeviceInfo", "Ausfuehrung: ".$DeviceID, 0);
 			$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15001/'.$DeviceID.'"';
 			$Response = exec($Message." 2>&1", $Output);
@@ -371,7 +374,7 @@
 		$Key = $this->ReadAttributeString("PresharedKey");
 		$Identifier = $this->ReadAttributeString("Identifier");
 		$GatewayInfoArray = array();
-		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16)) {
+		If (($this->ReadPropertyBoolean("Open") == true) AND (strlen($Identifier) > 0) AND (strlen($Key) == 16) AND ($this->ConnectionTest() == true)) {
 			$this->SendDebug("GatewayInfo", "Ausfuehrung", 0);
 			$Message = 'sudo coap-client -m get -u "'.$Identifier.'" -k "'.$Key.'" "coaps://'.$IP.':5684/15011/15012"';
 			$Response = exec($Message." 2>&1", $Output);
