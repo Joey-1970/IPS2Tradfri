@@ -444,12 +444,12 @@
 	{
 		$Result = false;
 	     	If (Sys_Ping($this->ReadPropertyString("GatewayIP"), 150)) {
-		      	$this->SendDebug("ConnectionTest", "Angegebene IP ".$this->ReadPropertyString("IPAddress")." reagiert", 0);
+		      	//$this->SendDebug("ConnectionTest", "Angegebene IP ".$this->ReadPropertyString("GatewayIP")." reagiert", 0);
 			$Result = true;
 	      	}
 		else {
-			$this->SendDebug("ConnectionTest", "GatewayIP ".$this->ReadPropertyString("IPAddress")." reagiert nicht!", 0);
-			IPS_LogMessage("IPS2Tradfi","GatewayIP ".$this->ReadPropertyString("IPAddress")." reagiert nicht!");
+			$this->SendDebug("ConnectionTest", "GatewayIP ".$this->ReadPropertyString("GatewayIP")." reagiert nicht!", 0);
+			IPS_LogMessage("IPS2Tradfi","GatewayIP ".$this->ReadPropertyString("GatewayIP")." reagiert nicht!");
 			$this->SetStatus(202);
 		}
 	return $Result;
