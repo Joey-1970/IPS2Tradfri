@@ -437,6 +437,19 @@
 	return $Result;
 	}     
 	
-	 
+	private function ConnectionTest()
+	{
+		$Result = false;
+	     	If (Sys_Ping($this->ReadPropertyString("GatewayIP"), 150)) {
+		      	$this->SendDebug("ConnectionTest", "Angegebene IP ".$this->ReadPropertyString("IPAddress")." reagiert", 0);
+			$Result = true;
+	      	}
+		else {
+			$this->SendDebug("ConnectionTest", "GatewayIP ".$this->ReadPropertyString("IPAddress")." reagiert nicht!", 0);
+			IPS_LogMessage("IPS2Tradfi","GatewayIP ".$this->ReadPropertyString("IPAddress")." reagiert nicht!");
+			$this->SetStatus(202);
+		}
+	return $Result;
+	}
 }
 ?>
