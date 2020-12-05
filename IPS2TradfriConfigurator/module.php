@@ -55,6 +55,7 @@
 			$arrayCreate = array();
 			If (($DeviceArray[$i]["DeviceID"] >= 65537) AND 
 			    ($DeviceArray[$i]["Class"] <> "Unknown") AND 
+			    ($DeviceArray[$i]["Class"] <> "Remote") AND 
 			    ($DeviceArray[$i]["Class"] <> "MotionSensor")) {
 				If ($DeviceArray[$i]["Class"] == "Bulb") {
 					$arrayCreate[] = array("moduleID" => "{3B0E081A-A63E-7496-E304-A34C00790516}", "location" => $RootNames,
