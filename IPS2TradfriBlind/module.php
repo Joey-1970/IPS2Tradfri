@@ -64,7 +64,9 @@
 		
 		If (($this->ReadPropertyBoolean("Open") == true) AND (IPS_GetKernelRunlevel() == KR_READY)) {
 			If ($this->ReadPropertyInteger("DeviceID") >= 65537) {
-				$this->SetStatus(102);
+				If ($this->GetStatus() <> 102) {
+					$this->SetStatus(102);
+				}
 				If (IPS_GetKernelRunlevel() == KR_READY) {
 					$this->GetDeviceInfo();
 					$this->GetState();
@@ -74,11 +76,15 @@
 			else {
 				Echo "Syntax der Device ID inkorrekt!";
 				$this->SendDebug("ApplyChanges", "Syntax der Device ID inkorrekt!", 0);
-				$this->SetStatus(203);
+				If ($this->GetStatus() <> 202) {
+					$this->SetStatus(202);
+				}
 			}
 		}
 		else {
-			$this->SetStatus(104);
+			If ($this->GetStatus() <> 104) {
+				$this->SetStatus(104);
+			}
 			$this->SetTimerInterval("Timer_1", 0);
 		}	
 	}
