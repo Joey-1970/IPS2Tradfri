@@ -60,7 +60,9 @@
 			$IP = $this->ReadPropertyString("GatewayIP");
 			If ((strlen($Identifier) > 0) AND (strlen($Key) == 16) AND (filter_var($IP, FILTER_VALIDATE_IP)) AND ($this->ConnectionTest() == true)) {
 				$this->GatewayInfo();
-				$this->SetStatus(102);
+				If ($this->GetStatus() <> 102) {
+					$this->SetStatus(102);
+				}
 			}
 			else {
 				$MessageText = "";
@@ -78,12 +80,16 @@
 				}				
 				Echo trim($MessageText);
 				$this->SendDebug("ApplyChanges", trim($MessageText), 0);
-				$this->SetStatus(203);
+				If ($this->GetStatus() <> 202) {
+					$this->SetStatus(202);
+				}
 			}
 			
 		}
 		else {
-			$this->SetStatus(104);
+			If ($this->GetStatus() <> 104) {
+				$this->SetStatus(104);
+			}
 			
 		}	
 	}
@@ -450,7 +456,9 @@
 		else {
 			$this->SendDebug("ConnectionTest", "GatewayIP ".$this->ReadPropertyString("GatewayIP")." reagiert nicht!", 0);
 			IPS_LogMessage("IPS2Tradfi","GatewayIP ".$this->ReadPropertyString("GatewayIP")." reagiert nicht!");
-			$this->SetStatus(202);
+			If ($this->GetStatus() <> 202) {
+				$this->SetStatus(202);
+			}
 		}
 	return $Result;
 	}
