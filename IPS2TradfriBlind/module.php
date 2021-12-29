@@ -72,7 +72,7 @@
 				If (IPS_GetKernelRunlevel() == KR_READY) {
 					$this->GetDeviceInfo();
 					$this->GetState();
-					$this->SetTimerInterval("Timer_1", ($this->ReadPropertyInteger("Timer_1") * 1000);
+					$this->SetTimerInterval("Timer_1", $this->ReadPropertyInteger("Timer_1") * 1000);
 				}
 			}
 			else {
