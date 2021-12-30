@@ -13,6 +13,7 @@
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("DeviceID", 0);
 		$this->RegisterPropertyInteger("DeviceSpecification", 0);
+		$this->RegisterPropertyInteger("Timer_1", 1);
 		$this->RegisterTimer("Timer_1", 0, 'IPS2TradfriBulb_GetState($_IPS["TARGET"]);');
 		
 		$this->RegisterAttributeString("Name", "");
@@ -79,6 +80,7 @@
 		$arrayElements = array(); 
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
 		$arrayElements[] = array("type" => "NumberSpinner", "name" => "DeviceID", "caption" => "Device ID", "minimum" => 65537, "maximum" => 66000);
+		$arrayElements[] = array("type" => "NumberSpinner", "name" => "Timer_1", "caption" => "Timer-Interval", "suffix" => "Sekunden", "minimum" => 1);
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 		$arrayElements[] = array("type" => "Label", "label" => "Name: ".$this->ReadAttributeString("Name")); 
 		$arrayElements[] = array("type" => "Label", "label" => "Typ: ".$this->ReadAttributeString("Typ")); 
@@ -126,7 +128,7 @@
 				If (IPS_GetKernelRunlevel() == KR_READY) {
 					$this->GetDeviceInfo();
 					$this->GetState();
-					$this->SetTimerInterval("Timer_1", 1000);
+					$this->SetTimerInterval("Timer_1", $this->ReadPropertyInteger("Timer_1") * 1000);
 				}
 			}
 			else {
